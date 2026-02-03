@@ -52,7 +52,7 @@ const SignatureExperiences = () => {
       icon: <Sparkles className="w-8 h-8" />,
       title: "Degustation Journey",
       description: "Our signature 7-course or 10-course tasting menu showcasing the finest seasonal ingredients and innovative techniques.",
-      features: ["Seasonal menu", "Wine pairing available", "3.5 hour experience"]
+      features: ["Seasonal menu", "3.5 hour experience" , "Chef-led culinary storytelling"]
     }
   ];
 
