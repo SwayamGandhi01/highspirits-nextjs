@@ -9,24 +9,39 @@ const SignatureExperiences = () => {
       description: "An intimate 8-seat experience where our Executive Chef crafts a personalized journey through contemporary Indian cuisine, paired with rare wines from our cellar.",
       features: ["Personalized 10-course menu", "Chef interaction", "Kitchen tour"]
     },
-    {
-      icon: <Wine className="w-8 h-8" />,
-      title: "Wine Cellar Experience",
-      description: "Explore our extensive collection of Australian and international vintages in our climate-controlled cellar, with expert sommelier guidance.",
-      features: ["500+ wine selection", "Private tasting", "Sommelier pairing"]
-    },
-    {
-      icon: <Heart className="w-8 h-8" />,
-      title: "Romantic Candlelight Dining",
-      description: "An unforgettable evening in our most secluded corner, with bespoke menus, live music, and personalized service for life's special moments.",
-      features: ["Private table setup", "Rose arrangements", "Dedicated server"]
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "Private Dining Rooms",
-      description: "Host up to 24 guests in our luxurious private spaces, perfect for celebrations, business dinners, or intimate gatherings.",
-      features: ["3 private rooms", "Custom menus", "AV equipment"]
-    },
+   {
+  icon: <Flame className="w-8 h-8" />,
+  title: "Skip the Trip",
+  description: "Get your favorites delivered straight to your door fast, easy, and hassle free. No lines, no travel, just tap and enjoy.",
+  features: [
+    "Doorstep delivery",
+    "Real-time order tracking",
+    "Wide restaurant selection"
+  ]
+},
+
+ {
+  icon: <Heart className="w-8 h-8" />,
+  title: "Lunch Dining Experience",
+  description: "Take a relaxing midday break with our thoughtfully curated lunch menu, offering fresh flavors, quick service, and a comfortable dining atmosphere.",
+  features: [
+    "Freshly prepared lunch menu",
+    "Quick & efficient service",
+    "Comfortable seating"
+  ]
+},
+
+   {
+  icon: <Users className="w-8 h-8" />,
+  title: "Lavish Buffet Experience",
+  description: "Enjoy a wide spread of freshly prepared dishes with unlimited servings, perfect for families, groups, and celebratory dining.",
+  features: [
+    "Multi-cuisine spread",
+    "Unlimited servings",
+    "Live food counters"
+  ]
+},
+
     {
       icon: <Briefcase className="w-8 h-8" />,
       title: "Corporate High-End Events",
