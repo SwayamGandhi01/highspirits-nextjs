@@ -13,7 +13,6 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Menu from "./pages/Menu";
 import Gallery from "./pages/Gallery";
-import Reservations from "./pages/Reservations";
 import Events from "./pages/Events";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
@@ -35,7 +34,6 @@ const AppContent = () => {
           <Route path="/about" element={<About />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/reserve-a-table" element={<Reservations />} />
           <Route path="/events" element={<Events />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
