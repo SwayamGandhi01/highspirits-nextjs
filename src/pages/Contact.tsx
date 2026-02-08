@@ -10,10 +10,25 @@ import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
 
+// Helper function to get phone number based on Australia time
+const getPhoneNumber = () => {
+  // Get current time in Australia/Perth timezone (AWST - Western Australia where Bunbury is located)
+  const now = new Date();
+  const australiaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Perth' }));
+
+  // Temporary number valid until Feb 9, 2026, 6:00 AM Australia/Perth time
+  const switchBackTime = new Date('2026-02-09T06:00:00');
+
+  if (australiaTime < switchBackTime) {
+    return '0451 382 958'; // Tonight's temporary number
+  }
+  return '+61 420 408 809'; // Original number
+};
+
 const Contact = () => {
   useEffect(() => {
     document.title = 'Contact Us | Indian Buffet Restaurant in Bunbury';
-    
+
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
@@ -40,7 +55,7 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate required fields
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast.error('Please fill in all required fields');
@@ -49,7 +64,7 @@ const Contact = () => {
 
     try {
       setIsSubmitting(true);
-      
+
       // Prepare API payload - Strapi v4 format
       const payload = {
         data: {
@@ -86,7 +101,7 @@ const Contact = () => {
         subject: '',
         message: '',
       });
-      
+
       toast.success("Message sent! We'll respond within 24 hours.");
     } catch (err) {
       console.error('Error submitting contact form:', err);
@@ -105,7 +120,7 @@ const Contact = () => {
     {
       icon: Phone,
       title: 'Phone',
-      details: ['+61 420 408 809'],
+      details: [getPhoneNumber()],
     },
     {
       icon: Mail,

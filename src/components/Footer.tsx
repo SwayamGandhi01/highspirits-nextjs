@@ -1,20 +1,33 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 
+// Helper function to get phone number based on Australia time
+const getPhoneNumber = () => {
+  const now = new Date();
+  const australiaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Perth' }));
+  const switchBackTime = new Date('2026-02-09T06:00:00');
+
+  if (australiaTime < switchBackTime) {
+    return { display: '0451 382 958', tel: '0451382958' };
+  }
+  return { display: '+61 420-408-809', tel: '+61420408809' };
+};
+
 const Footer = () => {
+  const phone = getPhoneNumber();
   return (
     <footer className="luxury-gradient border-t border-accent/20">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          
+
           {/* About */}
           <div>
             <h3 className="text-2xl font-playfair font-bold text-luxury mb-4">
               HIGH SPIRITS
             </h3>
-           <p className="text-muted-foreground mb-6 leading-relaxed">
-  Authentic Indian flavours crafted with passion, served in a premium fine-dining experience.
-</p>
+            <p className="text-muted-foreground mb-6 leading-relaxed">
+              Authentic Indian flavours crafted with passion, served in a premium fine-dining experience.
+            </p>
             <div className="flex space-x-4">
               <a
                 href="https://facebook.com"
@@ -48,25 +61,25 @@ const Footer = () => {
             <h4 className="text-xl font-playfair font-semibold text-accent mb-4">
               Quick Links
             </h4>
-           <ul className="space-y-2">
-  {['Home', 'About', 'Menu', 'Gallery', 'Events'].map((link) => {
-    const path =
-      link === 'Home'
-        ? '/'
-        : `/${link.toLowerCase().replace(/\s+/g, '-')}`;
+            <ul className="space-y-2">
+              {['Home', 'About', 'Menu', 'Gallery', 'Events'].map((link) => {
+                const path =
+                  link === 'Home'
+                    ? '/'
+                    : `/${link.toLowerCase().replace(/\s+/g, '-')}`;
 
-    return (
-      <li key={link}>
-        <Link
-          to={path}
-          className="text-muted-foreground hover:text-accent transition-colors duration-300"
-        >
-          {link}
-        </Link>
-      </li>
-    );
-  })}
-</ul>
+                return (
+                  <li key={link}>
+                    <Link
+                      to={path}
+                      className="text-muted-foreground hover:text-accent transition-colors duration-300"
+                    >
+                      {link}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
 
           </div>
 
@@ -88,8 +101,8 @@ const Footer = () => {
               {/* UPDATED PHONE */}
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-accent flex-shrink-0" />
-                <a href="tel:+61 420-408-809" className="text-muted-foreground hover:text-accent transition-colors">
-                  +61 420-408-809
+                <a href={`tel:${phone.tel}`} className="text-muted-foreground hover:text-accent transition-colors">
+                  {phone.display}
                 </a>
               </li>
 
@@ -97,7 +110,7 @@ const Footer = () => {
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <span className="text-muted-foreground">
-                 highspirits005@gmail.com
+                  highspirits005@gmail.com
                 </span>
               </li>
 
@@ -111,8 +124,8 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2 text-muted-foreground">
               Lunch: 11:30 AM - 2:30 PM (Mon-Sun)
-              <br /> 
-               <br />
+              <br />
+              <br />
               Dinner: 5:00 PM - 9:00 PM (Mon-Sun)
             </ul>
           </div>
