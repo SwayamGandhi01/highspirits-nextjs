@@ -20,7 +20,7 @@ const getPhoneNumber = () => {
   const switchBackTime = new Date('2026-02-09T06:00:00');
 
   if (australiaTime < switchBackTime) {
-    return '0451 382 958'; // Tonight's temporary number
+    return '+61 0451 382 958'; // Tonight's temporary number
   }
   return '+61 420 408 809'; // Original number
 };

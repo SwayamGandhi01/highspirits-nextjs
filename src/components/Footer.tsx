@@ -8,7 +8,7 @@ const getPhoneNumber = () => {
   const switchBackTime = new Date('2026-02-09T06:00:00');
 
   if (australiaTime < switchBackTime) {
-    return { display: '0451 382 958', tel: '0451382958' };
+    return { display: '+61 0451 382 958', tel: '0451382958' };
   }
   return { display: '+61 420-408-809', tel: '+61420408809' };
 };
