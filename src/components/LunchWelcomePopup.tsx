@@ -271,7 +271,7 @@ const HighSpiritsPopup: React.FC<LunchWelcomePopupProps> = ({ isOpen, onClose })
                         Lunch Timings
                       </p>
                       <p className="text-lg font-semibold" style={{ color: '#fff' }}>
-                        11:30 AM — 2:30 PM Daily
+                        11:30 AM — 2:30 PM (Wed-Sun)
                       </p>
                     </div>
                   </div>
