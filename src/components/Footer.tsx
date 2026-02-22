@@ -123,7 +123,7 @@ const Footer = () => {
               Opening Hours
             </h4>
             <ul className="space-y-2 text-muted-foreground">
-              Lunch: 11:30 AM - 2:30 PM (Wed-Sun)
+              Lunch: 11:30 AM - 2:30 PM (Wed-Sat)
               <br />
               <br />
               Dinner: 5:00 PM - 9:00 PM (Mon-Sun)
