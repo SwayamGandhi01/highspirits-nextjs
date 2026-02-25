@@ -62,7 +62,7 @@ const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-2">
-              {['Home', 'About', 'Menu', 'Gallery', 'Events'].map((link) => {
+              {['Home', 'About', 'Menu', 'Gallery', 'Events', 'Blogs'].map((link) => {
                 const path =
                   link === 'Home'
                     ? '/'
