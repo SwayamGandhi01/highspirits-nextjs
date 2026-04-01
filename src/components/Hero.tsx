@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 import VideoBackground from './VideoBackground';
 import { Marquee } from './ui/marquee';
 import { cn } from '@/lib/utils';
@@ -27,16 +27,16 @@ const TaglineCard = ({ text }: { text: string }) => {
   return (
     <div
       className={cn(
-        "flex items-center p-8 mx-2",
+        "flex items-center p-3 sm:p-4 md:p-8 mx-1 sm:mx-2",
         "rounded-full border border-accent/30 bg-background/30 backdrop-blur-sm",
         "hover:bg-accent/10 hover:border-accent/50 transition-all duration-300"
       )}
     >
-      <Star className="w-4 h-4 fill-accent text-accent flex-shrink-0 mr-3" />
-      <span className="text-xl md:text-base font-medium text-foreground whitespace-nowrap">
+      <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-accent text-accent flex-shrink-0 mr-2 sm:mr-3" />
+      <span className="text-xs sm:text-sm md:text-base lg:text-xl font-medium text-foreground whitespace-nowrap">
         {text}
       </span>
-      <Star className="w-4 h-4 fill-accent text-accent flex-shrink-0 ml-3" />
+      <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-accent text-accent flex-shrink-0 ml-2 sm:ml-3" />
     </div>
   );
 };
@@ -190,14 +190,6 @@ const Hero = () => {
           </div>
         </motion.div>
       </div>
-
-      <motion.div
-        animate={{ y: [0, 15, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <ChevronDown className="w-8 h-8 text-accent" />
-      </motion.div>
     </section>
   );
 };

@@ -77,14 +77,14 @@ const ChefPhilosophy = () => {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <motion.p
-              className="text-accent font-inter tracking-widest mb-4 uppercase text-sm"
+              className="text-accent font-inter tracking-widest mb-4 uppercase text-sm text-center md:text-left"
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 3, repeat: Infinity }}
             >
               Meet the Visionary
             </motion.p>
             
-            <h2 className="text-5xl md:text-6xl font-playfair font-bold text-luxury mb-6 overflow-visible px-1">
+            <h2 className="text-5xl md:text-6xl font-playfair font-bold text-luxury mb-6 overflow-visible px-1 text-center md:text-left">
               CHEF'S PHILOSOPHY
             </h2>
 
@@ -93,7 +93,7 @@ const ChefPhilosophy = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="space-y-6 mb-8"
+              className="space-y-6 mb-8 text-center md:text-left "
             >
               <p className="text-xl text-muted-foreground leading-relaxed italic">
               
@@ -114,7 +114,7 @@ const ChefPhilosophy = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="relative"
+              className="relative flex flex-col items-center md:items-start"
             >
               <motion.svg
                 width="250"

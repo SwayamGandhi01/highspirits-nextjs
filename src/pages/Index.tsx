@@ -243,29 +243,31 @@ const Index = () => {
               animate={isChefInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p className="text-accent font-inter tracking-widest mb-3 uppercase text-sm">
+              <p className="text-accent font-inter tracking-widest mb-3 uppercase text-sm text-center md:text-left">
                 
               </p>
-              <h2 className="text-4xl md:text-5xl font-playfair font-bold text-luxury mb-6">
+              <h2 className="text-4xl md:text-5xl font-playfair font-bold text-luxury mb-6 text-center md:text-left">
                 Meet Our Business Partner
               </h2>
-              <p className="text-muted-foreground text-lg mb-4 leading-relaxed">
+              <p className="text-muted-foreground text-lg mb-4 leading-relaxed text-center md:text-left">
               In her role as a business partner, Ishpreet takes an active part in the operations every day and gets to know the customers personally, assuring that each and every visit is made pleasing, considerate, and unforgettable. Her presence, eye for detail, and genuine devotion to the art of making people's lives happier play an important part in creating the image of High Spirits as a classy restaurant and bar where one can enjoy the real taste of Indian fine dining in Bunbury, WA. Moreover, it helps the restaurant gain the fine dining standard in Australia through care, consistency, and warm-hearted hospitality.
               </p>
-              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+              <p className="text-muted-foreground text-lg mb-8 leading-relaxed text-center md:text-left">
                 In her role as a business partner, Ishpreet takes an active part in the operations every day and gets to know the customers personally, assuring that each and every visit is made pleasing, considerate, and unforgettable. 
               </p>
-              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+              <p className="text-muted-foreground text-lg mb-8 leading-relaxed text-center md:text-left">
                 Her presence, eye for detail, and genuine devotion to the art of making people's lives happier play an important part in creating the image of High Spirits as a classy restaurant and bar where one can enjoy the real taste of Indian fine dining in Bunbury, WA. Moreover, it helps the restaurant gain the fine dining standard in Australia through care, consistency, and warm-hearted hospitality.
               </p>
-              <Link to="/about">
-                <Button
-                  size="lg"
-                  className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold gold-glow"
-                >
-                  Discover Our Story
-                </Button>
-              </Link>
+              <div className="flex justify-center md:justify-start">
+                <Link to="/about">
+                  <Button
+                    size="lg"
+                    className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold gold-glow"
+                  >
+                    Discover Our Story
+                  </Button>
+                </Link>
+              </div>
             </motion.div>
           </div>
         </div>
