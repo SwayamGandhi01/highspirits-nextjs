@@ -258,7 +258,7 @@ const Contact = () => {
 
                   <div>
                     <Label htmlFor="phone" className="text-foreground">
-                      Phone (Optional)
+                      Phone 
                     </Label>
                     <Input
                       id="phone"
