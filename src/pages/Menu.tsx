@@ -354,62 +354,269 @@ const Menu = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="glass-effect rounded-lg md:rounded-xl overflow-hidden border-2 border-accent gold-glow p-6 md:p-10 max-w-4xl mx-auto"
+                  className="w-full max-w-4xl mx-auto"
                 >
-                  <div className="space-y-8">
-                    <div className="text-center">
-                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-playfair font-bold text-accent mb-2">
-                        High Spirits Buffet
-                      </h2>
-                      <p className="text-muted-foreground">Complete dining experience</p>
-                    </div>
+                  {/* Premium Buffet Container */}
+                  <div className="relative rounded-3xl overflow-hidden border-3 border-accent gold-glow">
+                    {/* Elegant Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent/15 via-background to-accent/10 pointer-events-none"></div>
 
-                    {buffetCategories.map((buffetCategory) => (
-                      <div key={buffetCategory.id} className="space-y-3">
-                        <h3 className="text-xl md:text-2xl font-playfair font-bold text-accent border-b border-accent/30 pb-2">
-                          {buffetCategory.title}
-                        </h3>
-                        <ul className="space-y-2">
-                          {buffetCategory.buffet_items.map((item: any) => (
-                            <li key={item.id} className="flex items-start gap-3">
-                              <span className="text-accent text-lg mt-1">•</span>
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                  <p className="text-lg font-semibold text-foreground">{item.name}</p>
-                                  {item.isVeg && (
-                                    <span className="inline-flex items-center justify-center w-5 h-5 rounded border-2 border-green-500">
-                                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                                    </span>
-                                  )}
-                                  {!item.isVeg && (
-                                    <span className="inline-flex items-center justify-center w-5 h-5 rounded border-2 border-red-500">
-                                      <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                                    </span>
-                                  )}
-                                  {item.isSpicy && (
-                                    <span className="text-xs font-semibold text-red-500">🌶️</span>
-                                  )}
-                                </div>
-                                {item.description && (
-                                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                                )}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+                    <div className="relative p-10 md:p-14 lg:p-16">
+                      {/* Luxe Header Section */}
+                      <motion.div
+                        initial={{ opacity: 0, y: -30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7 }}
+                        className="text-center mb-14 pb-10 border-b-3 border-gradient-to-r from-accent/30 via-accent/50 to-accent/30"
+                      >
+                        {/* Floating Crown */}
+                        <motion.div
+                          animate={{ y: [0, -12, 0] }}
+                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                          className="flex justify-center mb-6"
+                        >
+                          <span className="text-5xl md:text-6xl lg:text-7xl drop-shadow-lg">👑</span>
+                        </motion.div>
 
-                    <div className="text-center pt-6 border-t border-accent/30">
-                      <p className="text-lg text-muted-foreground mb-2">All for just</p>
-                      {buffetCategories[0]?.price ? (
-                        <>
-                          <p className="text-4xl md:text-5xl font-playfair font-bold text-accent">
-                            ${buffetCategories[0].price} <span className="text-xl">Per Person</span>
+                        {/* Main Title with Gradient */}
+                        <h2 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-bold mb-4 inline-block bg-gradient-to-r from-accent via-yellow-400 to-accent bg-clip-text text-transparent">
+                          High Spirits Buffet
+                        </h2>
+
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.7, delay: 0.2 }}
+                          className="mt-4 space-y-2"
+                        >
+                          <p className="text-base md:text-lg text-accent font-semibold tracking-wide">
+                            ✨ The Ultimate Fine-Dining Experience ✨
                           </p>
-                          <p className="text-sm text-muted-foreground mt-3">Available daily from 5:30 PM</p>
-                        </>
-                      ) : null}
+                          <p className="text-lg md:text-xl text-muted-foreground">
+                            Unlimited Authentic Indian & Punjabi Specialties
+                          </p>
+                        </motion.div>
+                      </motion.div>
+
+                      {/* Buffet Categories - Vertical List */}
+                      <div className="space-y-12">
+                        {buffetCategories.map((buffetCategory, catIndex) => {
+                          const categoryEmojis: { [key: string]: string } = {
+                            'Starters': '🥘',
+                            'Main Course': '🍛',
+                            'Mains': '🍛',
+                            'Breads': '🍞',
+                            'Bread': '🍞',
+                            'Desserts': '🍰',
+                            'Dessert': '🍰',
+                            'Beverages': '🥤',
+                            'Beverage': '🥤',
+                          };
+
+                          const emoji = Object.entries(categoryEmojis).find(([key]) =>
+                            buffetCategory.title.toLowerCase().includes(key.toLowerCase())
+                          )?.[1] || '🍽️';
+
+                          return (
+                            <motion.div
+                              key={buffetCategory.id}
+                              initial={{ opacity: 0, x: -30 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.6, delay: catIndex * 0.1 }}
+                              className="group"
+                            >
+                              {/* Category Header */}
+                              <div className="mb-8 relative">
+                                <div className="flex items-center gap-4 pb-4">
+                                  {/* Animated Emoji */}
+                                  <motion.span
+                                    animate={{ scale: [1, 1.15, 1], rotate: [0, 5, 0] }}
+                                    transition={{ duration: 2.5, repeat: Infinity, delay: catIndex * 0.3 }}
+                                    className="text-4xl md:text-5xl flex-shrink-0"
+                                  >
+                                    {emoji}
+                                  </motion.span>
+
+                                  {/* Title and Item Count */}
+                                  <div className="flex-1">
+                                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-playfair font-bold text-accent group-hover:text-white transition-colors duration-300">
+                                      {buffetCategory.title}
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                      {buffetCategory.buffet_items.length} Authentic Specialties
+                                    </p>
+                                  </div>
+
+                                  {/* Item Count Badge */}
+                                  <div className="hidden lg:flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground font-bold text-lg shadow-lg shadow-accent/30">
+                                    {buffetCategory.buffet_items.length}
+                                  </div>
+                                </div>
+
+                                {/* Gradient Divider */}
+                                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent/60 to-transparent rounded-full"></div>
+                              </div>
+
+                              {/* Items List */}
+                              <ul className="space-y-4 pl-2 md:pl-6">
+                                {buffetCategory.buffet_items.map((item: any, itemIndex: number) => (
+                                  <motion.li
+                                    key={item.id}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.4, delay: itemIndex * 0.06 }}
+                                    className="group/item flex items-start gap-4 p-4 md:p-5 rounded-xl bg-gradient-to-r from-accent/5 to-transparent border-l-4 border-accent/0 group-hover/item:border-accent group-hover/item:bg-accent/8 transition-all duration-300 hover:shadow-md hover:shadow-accent/20"
+                                  >
+                                    {/* Left Accent Bar */}
+                                    <div className="flex-shrink-0 w-1 h-full min-h-[60px] bg-gradient-to-b from-accent to-accent/30 rounded-full group-hover/item:h-auto transition-all duration-300"></div>
+
+                                    {/* Item Content */}
+                                    <div className="flex-1 min-w-0">
+                                      {/* Item Name & Badges */}
+                                      <div className="flex items-start justify-between gap-3 mb-2">
+                                        <h4 className="text-base md:text-lg font-semibold text-foreground group-hover/item:text-accent transition-colors duration-300 leading-snug">
+                                          {item.name}
+                                        </h4>
+
+                                        {/* Badge Container */}
+                                        <div className="flex items-center gap-2 flex-shrink-0">
+                                          {/* Veg/Non-Veg Indicator */}
+                                          {item.isVeg !== null && (
+                                            <motion.div
+                                              whileHover={{ scale: 1.2 }}
+                                              className={`flex items-center justify-center w-6 h-6 rounded-lg border-2 transition-all duration-300 ${
+                                                item.isVeg
+                                                  ? 'border-green-500 bg-green-500/20 shadow-md shadow-green-500/30'
+                                                  : 'border-red-500 bg-red-500/20 shadow-md shadow-red-500/30'
+                                              }`}
+                                            >
+                                              <span
+                                                className={`w-2.5 h-2.5 rounded-full ${
+                                                  item.isVeg ? 'bg-green-500' : 'bg-red-500'
+                                                }`}
+                                              ></span>
+                                            </motion.div>
+                                          )}
+
+                                          {/* Spicy Badge */}
+                                          {item.isSpicy && (
+                                            <motion.span
+                                              whileHover={{ scale: 1.25 }}
+                                              className="text-base md:text-lg font-bold cursor-default"
+                                            >
+                                              🌶️
+                                            </motion.span>
+                                          )}
+                                        </div>
+                                      </div>
+
+                                      {/* Description */}
+                                      {item.description && (
+                                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed group-hover/item:text-foreground transition-colors duration-300">
+                                          {item.description}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Premium Pricing Section */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.7, delay: 0.2 }}
+                        className="mt-16 pt-12 border-t-3 border-gradient-to-r from-accent/30 via-accent/50 to-accent/30"
+                      >
+                        <div className="text-center">
+                          {/* Price Tag */}
+                          <motion.div
+                            initial={{ scale: 0.8 }}
+                            whileInView={{ scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7, delay: 0.3 }}
+                          >
+                            <p className="text-base md:text-lg text-muted-foreground mb-4 font-medium">
+                              Complete Dining Experience for Just
+                            </p>
+
+                            <div className="mb-8">
+                              {/* Price Glow Effect */}
+                              <div className="relative inline-block">
+                                <div className="absolute -inset-4 bg-accent/30 blur-3xl rounded-3xl"></div>
+
+                                <div className="relative px-10 py-8 rounded-3xl border-3 border-accent bg-gradient-to-b from-accent/15 to-accent/5">
+                                  <p className="text-6xl md:text-7xl lg:text-8xl font-playfair font-bold text-accent leading-none">
+                                    ${buffetCategories[0]?.price}
+                                  </p>
+                                  <p className="text-lg md:text-xl text-foreground font-semibold mt-3">
+                                    Per Person
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+
+                          {/* Features & Info */}
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            className="mb-8"
+                          >
+                            <p className="text-base md:text-lg text-accent font-semibold mb-6">
+                              ✨ Benefits Include ✨
+                            </p>
+
+                            <div className="grid grid-cols-3 gap-3 md:gap-4 mb-8">
+                              <div className="p-4 md:p-5 rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border-2 border-accent/30 hover:border-accent/60 transition-all duration-300 group hover:shadow-lg hover:shadow-accent/20">
+                                <p className="text-3xl md:text-4xl mb-2">⏰</p>
+                                <p className="text-xs md:text-sm font-bold text-foreground">Daily Buffet</p>
+                                <p className="text-xs text-muted-foreground mt-1">5:30 PM Onwards</p>
+                              </div>
+
+                              <div className="p-4 md:p-5 rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border-2 border-accent/30 hover:border-accent/60 transition-all duration-300 group hover:shadow-lg hover:shadow-accent/20">
+                                <p className="text-3xl md:text-4xl mb-2">🍽️</p>
+                                <p className="text-xs md:text-sm font-bold text-foreground">Unlimited</p>
+                                <p className="text-xs text-muted-foreground mt-1">Multiple Servings</p>
+                              </div>
+
+                              <div className="p-4 md:p-5 rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border-2 border-accent/30 hover:border-accent/60 transition-all duration-300 group hover:shadow-lg hover:shadow-accent/20">
+                                <p className="text-3xl md:text-4xl mb-2">👥</p>
+                                <p className="text-xs md:text-sm font-bold text-foreground">Family</p>
+                                <p className="text-xs text-muted-foreground mt-1">Groups Welcome</p>
+                              </div>
+                            </div>
+                          </motion.div>
+
+                          {/* CTA Button */}
+                          <motion.div
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                           
+                          </motion.div>
+
+                          {/* Tagline */}
+                          <motion.p
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7, delay: 0.5 }}
+                            className="text-base md:text-lg text-accent italic font-semibold"
+                          >
+                            "Where Every Meal is a Celebration"
+                          </motion.p>
+                        </div>
+                      </motion.div>
                     </div>
                   </div>
                 </motion.div>

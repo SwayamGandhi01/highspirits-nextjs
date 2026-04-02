@@ -211,13 +211,13 @@ const About = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl md:text-5xl font-playfair font-bold text-luxury mb-6">
+              <h2 className="text-4xl md:text-5xl font-playfair font-bold text-luxury mb-6 text-center lg:text-left">
                 From Punjab to Australia
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+              <p className="text-lg text-muted-foreground leading-relaxed mb-4 text-center lg:text-left">
                 Our business partner, Ishpreet Bedi, grew up in the heart of Punjab, where hospitality is a way of life. From an early age, she learned that successful businesses are built on care, consistency, and attention to detail—values she brings into every aspect of operations and guest experience.
               </p>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+              <p className="text-lg text-muted-foreground leading-relaxed mb-4 text-center lg:text-left">
                With a refined vision shaped by hospitality experience across India and Australia, Ishpreet Bedi leads the brand with a focus on operational excellence, cultural authenticity, and elevated guest experiences.
               </p>
             </motion.div>
