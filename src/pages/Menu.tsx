@@ -576,25 +576,7 @@ const Menu = () => {
                               ✨ Benefits Include ✨
                             </p>
 
-                            <div className="grid grid-cols-3 gap-3 md:gap-4 mb-8">
-                              <div className="p-4 md:p-5 rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border-2 border-accent/30 hover:border-accent/60 transition-all duration-300 group hover:shadow-lg hover:shadow-accent/20">
-                                <p className="text-3xl md:text-4xl mb-2">⏰</p>
-                                <p className="text-xs md:text-sm font-bold text-foreground">Daily Buffet</p>
-                                <p className="text-xs text-muted-foreground mt-1">5:30 PM Onwards</p>
-                              </div>
-
-                              <div className="p-4 md:p-5 rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border-2 border-accent/30 hover:border-accent/60 transition-all duration-300 group hover:shadow-lg hover:shadow-accent/20">
-                                <p className="text-3xl md:text-4xl mb-2">🍽️</p>
-                                <p className="text-xs md:text-sm font-bold text-foreground">Unlimited</p>
-                                <p className="text-xs text-muted-foreground mt-1">Multiple Servings</p>
-                              </div>
-
-                              <div className="p-4 md:p-5 rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border-2 border-accent/30 hover:border-accent/60 transition-all duration-300 group hover:shadow-lg hover:shadow-accent/20">
-                                <p className="text-3xl md:text-4xl mb-2">👥</p>
-                                <p className="text-xs md:text-sm font-bold text-foreground">Family</p>
-                                <p className="text-xs text-muted-foreground mt-1">Groups Welcome</p>
-                              </div>
-                            </div>
+                           
                           </motion.div>
 
                           {/* CTA Button */}
