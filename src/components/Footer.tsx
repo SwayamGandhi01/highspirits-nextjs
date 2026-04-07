@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 // Helper function to get phone number based on Australia time
 const getPhoneNumber = () => {
@@ -30,7 +30,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/people/High-Spirits/61584455564451/?mibextid=wwXIfr&rdid=B3GSmEwP3hIywEgq&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1EdfG3WJWN%2F%3Fmibextid%3DwwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-accent/20 hover:bg-accent flex items-center justify-center transition-all duration-300 hover:scale-110"
@@ -38,20 +38,12 @@ const Footer = () => {
                 <Facebook className="w-5 h-5 text-accent hover:text-accent-foreground" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/highspirits5?igsh=MTY3cG5pZHhtamxtYg%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-accent/20 hover:bg-accent flex items-center justify-center transition-all duration-300 hover:scale-110"
               >
                 <Instagram className="w-5 h-5 text-accent hover:text-accent-foreground" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-accent/20 hover:bg-accent flex items-center justify-center transition-all duration-300 hover:scale-110"
-              >
-                <Twitter className="w-5 h-5 text-accent hover:text-accent-foreground" />
               </a>
             </div>
           </div>

@@ -45,7 +45,7 @@ const Hero = () => {
   const { openPopup } = useWalkInPopup();
 
   return (
-    <section className="relative h-screen pt-20 md:pt-24 lg:pt-28 flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen pt-8 md:pt-24 lg:pt-28 flex items-center justify-center overflow-hidden">
       <VideoBackground />
 
       {/* Floating Food Images */}
@@ -109,7 +109,7 @@ const Hero = () => {
             Authentic Indian Fine Dining
           </motion.p> */}
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-playfair font-bold mb-6">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-playfair font-bold mb-3 md:mb-6">
             <span className="text-luxury block">HIGH SPIRITS</span>
           </h1>
 
@@ -152,7 +152,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
-          className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-32"
+          className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-4 md:mb-32"
         >
           <Button
             onClick={() => openPopup()}

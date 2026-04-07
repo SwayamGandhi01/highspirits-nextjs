@@ -74,7 +74,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-accent p-2"
+            className="lg:hidden text-accent p-2 pr-0 transition-transform active:scale-95"
           >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
