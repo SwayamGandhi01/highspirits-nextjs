@@ -86,21 +86,6 @@ const Carousel3D = ({ items, autoPlay = true }: Carousel3DProps) => {
         </motion.button>
       </div>
 
-      {/* Indicators */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
-        {items.map((_, index) => (
-          <motion.button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            whileHover={{ scale: 1.2 }}
-            className={`w-3 h-3 rounded-full transition-all duration-500 ${
-              index === currentIndex 
-                ? 'bg-accent w-8 gold-glow' 
-                : 'bg-accent/30 hover:bg-accent/50'
-            }`}
-          />
-        ))}
-      </div>
     </div>
   );
 };

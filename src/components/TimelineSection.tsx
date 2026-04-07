@@ -58,7 +58,7 @@ const TimelineSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="py-32 bg-gradient-to-b from-background via-secondary/10 to-background relative overflow-hidden">
+    <section ref={containerRef} className="py-10 bg-gradient-to-b from-background via-secondary/10 to-background relative overflow-hidden">
       {/* Parallax background elements */}
       <motion.div 
         style={{ y, opacity }}

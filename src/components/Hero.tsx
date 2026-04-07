@@ -11,7 +11,7 @@ import heroDish2 from '@/assets/hero-dish-2.jpg';
 import heroDish3 from '@/assets/hero-dish-3.jpg';
 
 const taglines = [
-  "Buffet Starts at 5:30 P.M",
+  "Buffet Starts at 5:00 P.M",
   "Join Us for a High-Spirited Evening",
   "Punjabi Roots. Premium Plates",
   "High on Taste. High on Spirit",
@@ -119,19 +119,19 @@ const Hero = () => {
             transition={{ delay: 0.8 }}
             className="text-xl md:text-3xl font-playfair text-foreground mb-4"
           >
-         AUTHENTIC INDIAN RESTAURANT
+            AUTHENTIC INDIAN RESTAURANT
           </motion.p>
 
           {/* ⭐ ONLY NEW THING ADDED — SLOGAN */}
-    <motion.p
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 0.9 }}
-  className="text-lg md:text-xl text-accent italic font-semibold mb-4"
-  style={{ fontFamily: 'Playfair Display, serif' }}
->
-  “Taste the Spirit of Punjab”
-</motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+            className="text-lg md:text-xl text-accent italic font-semibold mb-4"
+            style={{ fontFamily: 'Playfair Display, serif' }}
+          >
+            “Taste the Spirit of Punjab”
+          </motion.p>
 
 
 
@@ -143,7 +143,7 @@ const Hero = () => {
             transition={{ delay: 1 }}
             className="text-base md:text-lg text-muted-foreground mb-12 max-w-2xl mx-auto"
           >
-            Discover authentic Punjabi, North Indian, and tandoori specialties 
+            Discover authentic Punjabi, North Indian, and tandoori specialties
             crafted with traditional flavors - served in a luxurious fine-dining atmosphere.
           </motion.p>
         </motion.div>

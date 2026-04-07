@@ -176,14 +176,14 @@ const Index = () => {
       <SignatureExperiences />
       
       {/* 3D Carousel Section */}
-      <section className="py-32 bg-gradient-to-b from-background to-secondary/20">
+      <section className="py-10 bg-gradient-to-b from-background to-secondary/20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9 }}
-            className="text-center mb-20"
+            className="text-center mb-6"
           >
             <motion.p
               className="text-accent font-inter tracking-widest mb-4 uppercase text-sm"
@@ -218,7 +218,7 @@ const Index = () => {
       <ChefPhilosophy />
 
       {/* Chef Section */}
-      <section ref={chefRef} className="py-24 bg-secondary/30">
+      <section ref={chefRef} className="py-10 bg-secondary/30">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -274,7 +274,7 @@ const Index = () => {
       </section>
 
       {/* Ambience Section */}
-      <section ref={ambienceRef} className="py-24 relative overflow-hidden">
+      <section ref={ambienceRef} className="py-10 relative overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={restaurantAmbience}

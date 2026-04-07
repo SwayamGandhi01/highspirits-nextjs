@@ -48,7 +48,7 @@ const AmbienceTour = () => {
   // ];
 
   return (
-    <section ref={containerRef} className="py-10 relative overflow-hidden bg-[#E7EBDD]">
+    <section ref={containerRef} className="py-0 relative overflow-hidden bg-[#E7EBDD]">
       <VideoBackground overlayOpacity={0.5} />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -63,7 +63,7 @@ const AmbienceTour = () => {
           className="max-w-7xl mx-auto mb-28"
         >
           {/* CENTERED HEADING */}
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10">
             <h3 className="text-4xl md:text-5xl font-bold mb-4 text-luxury">
               Our Gallery
             </h3>

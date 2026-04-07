@@ -13,7 +13,7 @@ const ChefPhilosophy = () => {
   const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9]);
 
   return (
-    <section ref={containerRef} className="py-32 bg-gradient-to-b from-background via-primary/5 to-background relative overflow-hidden">
+    <section ref={containerRef} className="pt-10 pb-10 bg-gradient-to-b from-background via-primary/5 to-background relative overflow-hidden">
       {/* Parallax background elements */}
       <motion.div 
         style={{ y }}

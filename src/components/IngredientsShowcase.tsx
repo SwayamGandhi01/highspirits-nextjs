@@ -64,7 +64,7 @@ const IngredientsShowcase = () => {
   }, []);
 
   return (
-    <section className="py-32 bg-gradient-to-b from-background to-secondary/20 relative overflow-hidden">
+    <section className="py-10 bg-gradient-to-b from-background to-secondary/20 relative overflow-hidden">
       {/* Animated background pattern */}
       <motion.div
         animate={{ 

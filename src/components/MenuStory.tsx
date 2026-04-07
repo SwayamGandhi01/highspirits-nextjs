@@ -26,7 +26,7 @@ const MenuStory = () => {
   ];
 
   return (
-    <section className="py-32 bg-gradient-to-b from-secondary/20 via-background to-secondary/20 relative overflow-hidden">
+    <section className="pt-0 pb-10 bg-gradient-to-b from-secondary/20 via-background to-secondary/20 relative overflow-hidden">
       {/* Animated background */}
       <motion.div
         animate={{
