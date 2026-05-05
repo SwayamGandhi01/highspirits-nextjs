@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MenuItemSkeleton } from '@/components/skeletons/MenuItemSkeleton';
 import ShareButtons from '@/components/ShareButtons';
+import { useCart } from '@/context/CartContext';
+import { ShoppingBag, Plus } from 'lucide-react';
 
 
 interface StrapiImage {
@@ -82,6 +84,7 @@ const Menu = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [buffetLoading, setBuffetLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { addToCart, setIsOpen } = useCart();
 
   useEffect(() => {
     document.title = 'High Spirits Menu | Indian Buffet & Fine Dining Bunbury';
@@ -318,9 +321,18 @@ const Menu = () => {
                               <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-3">
                                 {shortDescription}
                               </p>
-                              <ShareButtons
-                                title={title}
-                              />
+                              <div className="flex flex-wrap items-center gap-3">
+                                <ShareButtons
+                                  title={title}
+                                />
+                                <Button 
+                                  onClick={() => addToCart({ id: item.id, title, price, quantity: 1 })}
+                                  className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 h-10 px-6 rounded-full font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
+                                >
+                                  <Plus className="w-4 h-4" />
+                                  Add to Cart
+                                </Button>
+                              </div>
                             </div>
                         </motion.div>
                       );
@@ -572,8 +584,20 @@ const Menu = () => {
                           <motion.div
                             whileHover={{ scale: 1.08 }}
                             whileTap={{ scale: 0.95 }}
+                            className="flex justify-center"
                           >
-                           
+                            <Button 
+                              onClick={() => addToCart({ 
+                                id: 9999, // Unique ID for Buffet
+                                title: "High Spirits Buffet", 
+                                price: buffetCategories[0]?.price || 0, 
+                                quantity: 1 
+                              })}
+                              className="bg-accent hover:bg-accent/90 text-accent-foreground px-12 py-8 rounded-2xl font-bold text-xl gold-glow flex items-center gap-4 transition-all duration-300"
+                            >
+                              <ShoppingBag className="w-6 h-6" />
+                              Add Buffet to Cart
+                            </Button>
                           </motion.div>
 
                           {/* Tagline */}

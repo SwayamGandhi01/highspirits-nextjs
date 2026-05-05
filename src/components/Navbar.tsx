@@ -4,11 +4,14 @@ import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
 import { useWalkInPopup } from '@/context/WalkInPopupContext';
+import { useCart } from '@/context/CartContext';
+import { ShoppingCart } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { openPopup } = useWalkInPopup();
+  const { totalItems, setIsOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,6 +66,17 @@ const Navbar = () => {
                 </Link>
               </motion.div>
             ))}
+            <button 
+              onClick={() => setIsOpen(true)}
+              className="relative p-2 text-foreground hover:text-accent transition-colors duration-300 group"
+            >
+              <ShoppingCart size={24} />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full gold-glow">
+                  {totalItems}
+                </span>
+              )}
+            </button>
             <Button
               onClick={() => openPopup()}
               className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold px-6 gold-glow"
@@ -71,13 +85,26 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-accent p-2 pr-0 transition-transform active:scale-95"
-          >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          <div className="lg:hidden flex items-center space-x-4">
+            <button 
+              onClick={() => setIsOpen(true)}
+              className="relative p-2 text-foreground hover:text-accent transition-colors duration-300"
+            >
+              <ShoppingCart size={24} />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full gold-glow">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-accent p-2 pr-0 transition-transform active:scale-95"
+            >
+              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
       </div>
 

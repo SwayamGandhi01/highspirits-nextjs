@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import WalkInPopup from "./components/WalkInPopup";
 import { WalkInPopupProvider, useWalkInPopup } from "./context/WalkInPopupContext";
+import { CartProvider } from "./context/CartContext";
+import Cart from "./components/Cart";
 
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -42,6 +44,7 @@ const AppContent = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <WalkInPopup isOpen={isOpen} onClose={closePopup} />
+        <Cart />
       </BrowserRouter>
     </>
   );
@@ -52,9 +55,11 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <WalkInPopupProvider>
-        <AppContent />
-      </WalkInPopupProvider>
+      <CartProvider>
+        <WalkInPopupProvider>
+          <AppContent />
+        </WalkInPopupProvider>
+      </CartProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
