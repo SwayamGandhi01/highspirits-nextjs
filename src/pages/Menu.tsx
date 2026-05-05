@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MenuItemSkeleton } from '@/components/skeletons/MenuItemSkeleton';
 import ShareButtons from '@/components/ShareButtons';
 import { useCart } from '@/context/CartContext';
+import { useWalkInPopup } from '@/context/WalkInPopupContext';
 import { ShoppingBag, Plus } from 'lucide-react';
 
 
@@ -84,7 +85,8 @@ const Menu = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [buffetLoading, setBuffetLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { addToCart, setIsOpen } = useCart();
+  const { addToCart } = useCart();
+  const { openPopup } = useWalkInPopup();
 
   useEffect(() => {
     document.title = 'High Spirits Menu | Indian Buffet & Fine Dining Bunbury';
@@ -632,7 +634,7 @@ const Menu = () => {
             <Button
               size="lg"
               className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold gold-glow"
-              onClick={() => window.location.href = '/walk-in'}
+              onClick={() => openPopup()}
             >
               Book Your Table
             </Button>
