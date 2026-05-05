@@ -255,8 +255,8 @@ const Menu = () => {
       <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-background to-secondary/20">
         <div className="container mx-auto px-4 md:px-6">
           <Tabs defaultValue="buffet" className="w-full">
-            <TabsList className="flex flex-wrap justify-center gap-1 md:gap-2 mb-8 md:mb-12 bg-secondary/50 p-2 rounded-lg h-auto w-fit mx-auto">
-              <TabsTrigger value="buffet" className="text-xs sm:text-sm md:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+            <TabsList className="flex flex-nowrap md:flex-wrap justify-start md:justify-center gap-1 md:gap-2 mb-8 md:mb-12 bg-secondary/50 p-1 md:p-2 rounded-lg h-auto w-full md:w-fit mx-auto overflow-x-auto no-scrollbar scroll-smooth">
+              <TabsTrigger value="buffet" className="text-[10px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground px-3 md:px-6">
                 Buffet
               </TabsTrigger>
               {menuCategories.map((category: any) => {
@@ -266,7 +266,7 @@ const Menu = () => {
                   <TabsTrigger
                     key={category.id}
                     value={slug}
-                    className="text-xs sm:text-sm md:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+                    className="text-[10px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground px-3 md:px-6"
                   >
                     {title}
                   </TabsTrigger>
@@ -303,13 +303,13 @@ const Menu = () => {
                           }`}
                         >
                           <div className="flex flex-col justify-center">
-                            <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2 md:mb-3 gap-2">
-                              <div className="flex items-center gap-3">
-                                <h3 className="text-xl md:text-2xl lg:text-3xl font-playfair font-bold text-foreground">
+                            <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3 md:mb-4 gap-3">
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-playfair font-bold text-foreground leading-tight">
                                   {title}
                                 </h3>
                                 {featured && (
-                                  <span className="bg-accent text-accent-foreground px-2 md:px-3 py-1 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-wider">
+                                  <span className="bg-accent text-accent-foreground px-2 py-0.5 rounded-full text-[9px] md:text-xs font-semibold uppercase tracking-wider w-fit">
                                     Chef's Special
                                   </span>
                                 )}
@@ -323,13 +323,20 @@ const Menu = () => {
                               <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-3">
                                 {shortDescription}
                               </p>
-                              <div className="flex flex-wrap items-center gap-3">
-                                <ShareButtons
-                                  title={title}
-                                />
+                              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-4 sm:mt-0">
+                                <div className="flex items-center justify-between sm:justify-start gap-4">
+                                  <ShareButtons title={title} />
+                                  <Button 
+                                    onClick={() => addToCart({ id: item.id, title, price, quantity: 1 })}
+                                    className="sm:hidden flex-1 bg-accent hover:bg-accent/90 text-accent-foreground gap-2 h-10 px-4 rounded-full font-semibold"
+                                  >
+                                    <Plus className="w-4 h-4" />
+                                    Add to Cart
+                                  </Button>
+                                </div>
                                 <Button 
                                   onClick={() => addToCart({ id: item.id, title, price, quantity: 1 })}
-                                  className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 h-10 px-6 rounded-full font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
+                                  className="hidden sm:flex bg-accent hover:bg-accent/90 text-accent-foreground gap-2 h-10 px-6 rounded-full font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
                                 >
                                   <Plus className="w-4 h-4" />
                                   Add to Cart
@@ -364,38 +371,38 @@ const Menu = () => {
                     {/* Elegant Background */}
                     <div className="absolute inset-0 bg-gradient-to-br from-accent/15 via-background to-accent/10 pointer-events-none"></div>
 
-                    <div className="relative p-10 md:p-14 lg:p-16">
+                    <div className="relative p-6 md:p-14 lg:p-16">
                       {/* Luxe Header Section */}
                       <motion.div
                         initial={{ opacity: 0, y: -30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7 }}
-                        className="text-center mb-14 pb-10 border-b-3 border-gradient-to-r from-accent/30 via-accent/50 to-accent/30"
+                        className="text-center mb-8 md:mb-14 pb-6 md:pb-10 border-b-2 md:border-b-3 border-gradient-to-r from-accent/30 via-accent/50 to-accent/30"
                       >
                         {/* Floating Crown */}
                         <motion.div
                           animate={{ y: [0, -12, 0] }}
                           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                          className="flex justify-center mb-6"
+                          className="flex justify-center mb-4 md:mb-6"
                         >
-                          <span className="text-5xl md:text-6xl lg:text-7xl drop-shadow-lg">👑</span>
+                          <span className="text-4xl md:text-6xl lg:text-7xl drop-shadow-lg">👑</span>
                         </motion.div>
-
+ 
                         {/* Main Title with Gradient */}
-                        <h2 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-bold mb-4 inline-block bg-gradient-to-r from-accent via-yellow-400 to-accent bg-clip-text text-transparent">
+                        <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-3 md:mb-4 inline-block bg-gradient-to-r from-accent via-yellow-400 to-accent bg-clip-text text-transparent leading-tight">
                           High Spirits Buffet
                         </h2>
-
+ 
                         <motion.div
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 0.7, delay: 0.2 }}
-                          className="mt-4 space-y-2"
+                          className="mt-2 md:mt-4 space-y-1 md:space-y-2"
                         >
-                          <p className="text-base md:text-lg text-accent font-semibold tracking-wide">
+                          <p className="text-xs sm:text-sm md:text-lg text-accent font-semibold tracking-wide uppercase">
                             ✨ The Ultimate Fine-Dining Experience ✨
                           </p>
-                          <p className="text-lg md:text-xl text-muted-foreground">
+                          <p className="text-sm sm:text-base md:text-xl text-muted-foreground">
                             Unlimited Authentic Indian & Punjabi Specialties
                           </p>
                         </motion.div>
@@ -431,22 +438,22 @@ const Menu = () => {
                             >
                               {/* Category Header */}
                               <div className="mb-8 relative">
-                                <div className="flex items-center gap-4 pb-4">
+                                <div className="flex items-center gap-3 md:gap-4 pb-3 md:pb-4">
                                   {/* Animated Emoji */}
                                   <motion.span
                                     animate={{ scale: [1, 1.15, 1], rotate: [0, 5, 0] }}
                                     transition={{ duration: 2.5, repeat: Infinity, delay: catIndex * 0.3 }}
-                                    className="text-4xl md:text-5xl flex-shrink-0"
+                                    className="text-3xl md:text-5xl flex-shrink-0"
                                   >
                                     {emoji}
                                   </motion.span>
 
                                   {/* Title and Item Count */}
                                   <div className="flex-1">
-                                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-playfair font-bold text-accent group-hover:text-white transition-colors duration-300">
+                                    <h3 className="text-xl sm:text-2xl md:text-4xl font-playfair font-bold text-accent group-hover:text-white transition-colors duration-300">
                                       {buffetCategory.title}
                                     </h3>
-                                    <p className="text-sm text-muted-foreground mt-1">
+                                    <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
                                       {buffetCategory.buffet_items.length} Authentic Specialties
                                     </p>
                                   </div>
@@ -470,10 +477,10 @@ const Menu = () => {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.4, delay: itemIndex * 0.06 }}
-                                    className="group/item flex items-start gap-4 p-4 md:p-5 rounded-xl bg-gradient-to-r from-accent/5 to-transparent border-l-4 border-accent/0 group-hover/item:border-accent group-hover/item:bg-accent/8 transition-all duration-300 hover:shadow-md hover:shadow-accent/20"
+                                    className="group/item flex items-start gap-3 md:gap-4 p-3 md:p-5 rounded-xl bg-gradient-to-r from-accent/5 to-transparent border-l-4 border-accent/0 group-hover/item:border-accent group-hover/item:bg-accent/8 transition-all duration-300 hover:shadow-md hover:shadow-accent/20"
                                   >
                                     {/* Left Accent Bar */}
-                                    <div className="flex-shrink-0 w-1 h-full min-h-[60px] bg-gradient-to-b from-accent to-accent/30 rounded-full group-hover/item:h-auto transition-all duration-300"></div>
+                                    <div className="flex-shrink-0 w-0.5 md:w-1 h-full min-h-[50px] md:min-h-[60px] bg-gradient-to-b from-accent to-accent/30 rounded-full transition-all duration-300"></div>
 
                                     {/* Item Content */}
                                     <div className="flex-1 min-w-0">
@@ -555,11 +562,11 @@ const Menu = () => {
                               <div className="relative inline-block">
                                 <div className="absolute -inset-4 bg-accent/30 blur-3xl rounded-3xl"></div>
 
-                                <div className="relative px-10 py-8 rounded-3xl border-3 border-accent bg-gradient-to-b from-accent/15 to-accent/5">
-                                  <p className="text-6xl md:text-7xl lg:text-8xl font-playfair font-bold text-accent leading-none">
+                                <div className="relative px-6 py-6 md:px-10 md:py-8 rounded-2xl md:rounded-3xl border-2 md:border-3 border-accent bg-gradient-to-b from-accent/15 to-accent/5">
+                                  <p className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-playfair font-bold text-accent leading-none">
                                     ${buffetCategories[0]?.price}
                                   </p>
-                                  <p className="text-lg md:text-xl text-foreground font-semibold mt-3">
+                                  <p className="text-base md:text-xl text-foreground font-semibold mt-2 md:mt-3">
                                     Per Person
                                   </p>
                                 </div>
@@ -595,9 +602,9 @@ const Menu = () => {
                                 price: buffetCategories[0]?.price || 0, 
                                 quantity: 1 
                               })}
-                              className="bg-accent hover:bg-accent/90 text-accent-foreground px-12 py-8 rounded-2xl font-bold text-xl gold-glow flex items-center gap-4 transition-all duration-300"
+                              className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 sm:px-12 py-6 sm:py-8 rounded-xl sm:rounded-2xl font-bold text-base sm:text-xl gold-glow flex items-center gap-3 sm:gap-4 transition-all duration-300"
                             >
-                              <ShoppingBag className="w-6 h-6" />
+                              <ShoppingBag className="w-5 h-5 sm:w-6 h-6" />
                               Add Buffet to Cart
                             </Button>
                           </motion.div>
