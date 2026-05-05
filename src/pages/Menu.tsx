@@ -103,6 +103,7 @@ const Menu = () => {
         const apiUrl = new URL('https://calm-actor-864a39d720.strapiapp.com/api/menu-items');
         apiUrl.searchParams.append('populate', '*');
         apiUrl.searchParams.append('sort', 'displayOrder:asc');
+        apiUrl.searchParams.append('pagination[pageSize]', '100');
 
         console.log('Fetching menu items from:', apiUrl.toString());
 
@@ -122,20 +123,34 @@ const Menu = () => {
         const categoryMap = new Map<number, any>();
         
         items.forEach((item: any) => {
-          const category = item.menu_category;
-          if (category && category.isActive) {
-            if (!categoryMap.has(category.id)) {
-              categoryMap.set(category.id, {
-                id: category.id,
-                documentId: category.documentId,
-                title: category.title,
-                slug: category.slug,
-                displayOrder: category.displayOrder,
-                menu_items: [],
-              });
+          // Extract item attributes (handles v4 nested and v5 flat)
+          const attrs = item.attributes || item;
+          
+          // Extract category info (handles v4 { data: { id, attributes } } and v5 flat)
+          const catWrapper = attrs.menu_category;
+          const catData = catWrapper?.data?.attributes || (catWrapper?.attributes ? catWrapper.attributes : (catWrapper?.data ? catWrapper.data : catWrapper));
+          const catId = catWrapper?.data?.id || catWrapper?.id || item.menu_category?.id;
+          
+          if (catData && catId) {
+            // Check isActive (default to true if not specified)
+            const isActive = catData.isActive !== undefined ? catData.isActive : true;
+            
+            if (isActive) {
+              if (!categoryMap.has(catId)) {
+                categoryMap.set(catId, {
+                  id: catId,
+                  documentId: catData.documentId || catWrapper?.data?.documentId,
+                  title: catData.title,
+                  slug: catData.slug,
+                  displayOrder: catData.displayOrder || 0,
+                  menu_items: [],
+                });
+              }
+              const group = categoryMap.get(catId)!;
+              group.menu_items.push(item);
             }
-            const catData = categoryMap.get(category.id)!;
-            catData.menu_items.push(item);
+          } else {
+            console.warn('Item missing category info:', item);
           }
         });
 
@@ -175,6 +190,7 @@ const Menu = () => {
         apiUrl.searchParams.append('populate[buffet_items][fields][2]', 'isVeg');
         apiUrl.searchParams.append('populate[buffet_items][fields][3]', 'isSpicy');
         apiUrl.searchParams.append('populate[buffet_items][sort]', 'order:asc');
+        apiUrl.searchParams.append('pagination[pageSize]', '100');
 
         const buffetRes = await fetch(apiUrl.toString());
 
@@ -271,54 +287,28 @@ const Menu = () => {
                       const shortDescription = item.shortDescription || item.attributes?.shortDescription;
                       const featured = item.featured !== undefined ? item.featured : item.attributes?.featured;
                       
-                      // Handle image URL for both structures
-                      let imageUrl: string | null = null;
-                      let imageAlt = title || 'Menu item image';
-                      
-                      // Handle image URL for Strapi v5 flat structure
-                      // Prefer formats.medium if available, fallback to main url (already absolute)
-                      const image = item.image || item.attributes?.image;
-                      imageUrl = image?.formats?.medium?.url || image?.url || null;
-                      imageAlt = image?.alternativeText || title || 'Menu item image';
-
                       return (
                         <motion.div
                           key={item.id}
                           initial={{ opacity: 0, y: 30 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5, delay: index * 0.1 }}
-                          className={`glass-effect rounded-lg md:rounded-xl overflow-hidden hover:scale-[1.01] md:hover:scale-[1.02] transition-transform duration-300 ${
+                          className={`glass-effect rounded-lg md:rounded-xl overflow-hidden hover:scale-[1.01] md:hover:scale-[1.02] transition-transform duration-300 p-4 md:p-6 lg:p-8 ${
                             featured ? 'border-2 border-accent gold-glow' : ''
                           }`}
                         >
-                          <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] lg:grid-cols-[200px_1fr] gap-4 md:gap-6 p-4 md:p-6">
-                            {imageUrl ? (
-                              <div className="relative overflow-hidden rounded-lg h-40 md:h-48 lg:h-auto">
-                                <img
-                                  src={imageUrl}
-                                  alt={imageAlt}
-                                  className="w-full h-full object-cover"
-                                  onError={(e) => {
-                                    (e.target as HTMLImageElement).style.display = 'none';
-                                  }}
-                                />
-                                {featured && (
-                                  <div className="absolute top-2 right-2 bg-accent text-accent-foreground px-2 md:px-3 py-1 rounded-full text-xs font-semibold">
-                                    Chef's Special
-                                  </div>
-                                )}
-                              </div>
-                            ) : (
-                              <div className="relative overflow-hidden rounded-lg h-40 md:h-48 lg:h-auto bg-secondary/50 flex items-center justify-center">
-                                <p className="text-muted-foreground text-sm">No Image</p>
-                              </div>
-                            )}
-
-                            <div className="flex flex-col justify-center flex-1">
-                              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2 md:mb-3 gap-2">
-                                <h3 className="text-lg md:text-xl lg:text-2xl font-playfair font-bold text-foreground">
+                          <div className="flex flex-col justify-center">
+                            <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2 md:mb-3 gap-2">
+                              <div className="flex items-center gap-3">
+                                <h3 className="text-xl md:text-2xl lg:text-3xl font-playfair font-bold text-foreground">
                                   {title}
                                 </h3>
+                                {featured && (
+                                  <span className="bg-accent text-accent-foreground px-2 md:px-3 py-1 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-wider">
+                                    Chef's Special
+                                  </span>
+                                )}
+                              </div>
                                 {!['starters', 'mains', 'breads', 'desserts', 'tasting-menus', 'tasting-menu'].includes(slug) && !slug?.toLowerCase().includes('tasting') && (
                                   <span className="text-xl md:text-2xl font-bold text-accent flex-shrink-0">
                                     ${price?.toFixed(2)}
@@ -332,7 +322,6 @@ const Menu = () => {
                                 title={title}
                               />
                             </div>
-                          </div>
                         </motion.div>
                       );
                     })
