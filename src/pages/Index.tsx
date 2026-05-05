@@ -9,6 +9,7 @@ import AmbienceTour from '@/components/AmbienceTour';
 import ChefPhilosophy from '@/components/ChefPhilosophy';
 import MenuStory from '@/components/MenuStory';
 import Carousel3D from '@/components/Carousel3D';
+import MothersDayPopup from '@/components/MothersDayPopup';
 import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 import { ChefHat, CalendarDays, ShieldCheck, Star } from 'lucide-react';
@@ -138,6 +139,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <MothersDayPopup />
       <Navbar />
       <Hero />
 
