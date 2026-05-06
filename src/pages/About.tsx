@@ -44,7 +44,7 @@ const About = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden mt-20">
+      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden mt-32">
         <div className="absolute inset-0">
           <img
             src={restaurantAmbience}
@@ -63,7 +63,7 @@ const About = () => {
             About Us
           </motion.p>
         <section
-  className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center mt-20"
+  className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center mt-32"
   style={{ overflow: 'visible' }}
 >
   <div className="relative z-10 text-center px-6">

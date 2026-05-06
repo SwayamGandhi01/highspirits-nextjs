@@ -120,7 +120,7 @@ const BlogDetail = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative h-80 md:h-[500px] overflow-hidden mt-20 rounded-2xl mx-4 md:mx-auto md:max-w-6xl"
+        className="relative h-80 md:h-[500px] overflow-hidden mt-32 rounded-2xl mx-4 md:mx-auto md:max-w-6xl"
       >
         <img
           src={blog.image}

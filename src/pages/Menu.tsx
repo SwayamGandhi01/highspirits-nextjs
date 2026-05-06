@@ -222,7 +222,7 @@ const Menu = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden mt-20 luxury-gradient">
+      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden mt-32 luxury-gradient">
         <div className="relative z-10 text-center px-4">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -255,8 +255,8 @@ const Menu = () => {
       <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-background to-secondary/20">
         <div className="container mx-auto px-4 md:px-6">
           <Tabs defaultValue="buffet" className="w-full">
-            <TabsList className="flex flex-nowrap md:flex-wrap justify-start md:justify-center gap-1 md:gap-2 mb-8 md:mb-12 bg-secondary/50 p-1 md:p-2 rounded-lg h-auto w-full md:w-fit mx-auto overflow-x-auto no-scrollbar scroll-smooth">
-              <TabsTrigger value="buffet" className="text-[10px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground px-3 md:px-6">
+            <TabsList className="flex flex-wrap justify-center gap-2 mb-8 md:mb-12 bg-secondary/50 p-2 rounded-lg h-auto w-full max-w-5xl mx-auto">
+              <TabsTrigger value="buffet" className="text-xs sm:text-sm md:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground px-4 py-2 md:px-6">
                 Buffet
               </TabsTrigger>
               {menuCategories.map((category: any) => {
@@ -266,7 +266,7 @@ const Menu = () => {
                   <TabsTrigger
                     key={category.id}
                     value={slug}
-                    className="text-[10px] sm:text-xs md:text-sm lg:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground px-3 md:px-6"
+                    className="text-xs sm:text-sm md:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground px-4 py-2 md:px-6"
                   >
                     {title}
                   </TabsTrigger>
