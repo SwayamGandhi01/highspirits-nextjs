@@ -9,6 +9,7 @@ import ShareButtons from '@/components/ShareButtons';
 import { useCart } from '@/context/CartContext';
 import { useWalkInPopup } from '@/context/WalkInPopupContext';
 import { ShoppingBag, Plus } from 'lucide-react';
+import LOCAL_MENU, { USE_LOCAL_MENU } from '@/lib/menuData';
 
 
 interface StrapiImage {
@@ -85,6 +86,7 @@ const Menu = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [buffetLoading, setBuffetLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<string>('');
   const { addToCart } = useCart();
   const { openPopup } = useWalkInPopup();
 
@@ -98,8 +100,23 @@ const Menu = () => {
     }
   }, []);
 
+  // Select first category tab when menuCategories populate
+  useEffect(() => {
+    if (!activeTab && menuCategories.length > 0) {
+      const first = menuCategories[0];
+      const slug = first.slug || first.attributes?.slug || `category-${first.id}`;
+      setActiveTab(slug);
+    }
+  }, [menuCategories, activeTab]);
+
   // Fetch menu items directly and group by category
   useEffect(() => {
+    if (USE_LOCAL_MENU && LOCAL_MENU?.menuCategories) {
+      setMenuCategories(LOCAL_MENU.menuCategories || []);
+      setIsLoading(false);
+      return;
+    }
+
     const fetchMenuItems = async () => {
       try {
         setIsLoading(true);
@@ -179,6 +196,12 @@ const Menu = () => {
 
   // Fetch buffet categories
   useEffect(() => {
+    if (USE_LOCAL_MENU && LOCAL_MENU?.menuCategories) {
+      setBuffetCategories(LOCAL_MENU.buffetCategories || []);
+      setBuffetLoading(false);
+      return;
+    }
+
     const fetchBuffetCategories = async () => {
       try {
         setBuffetLoading(true);
@@ -254,11 +277,9 @@ const Menu = () => {
       {/* Menu Section */}
       <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-background to-secondary/20">
         <div className="container mx-auto px-4 md:px-6">
-          <Tabs defaultValue="buffet" className="w-full">
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v)} className="w-full">
             <TabsList className="flex flex-wrap justify-center gap-2 mb-8 md:mb-12 bg-secondary/50 p-2 rounded-lg h-auto w-full max-w-5xl mx-auto">
-              <TabsTrigger value="buffet" className="text-xs sm:text-sm md:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground px-4 py-2 md:px-6">
-                Buffet
-              </TabsTrigger>
+              {/* Buffet removed - categories from menu JSON shown below */}
               {menuCategories.map((category: any) => {
                 const slug = category.slug || category.attributes?.slug || `category-${category.id}`;
                 const title = category.title || category.attributes?.title || 'Menu';
@@ -356,276 +377,7 @@ const Menu = () => {
             })}
 
             {/* Buffet Tab */}
-            <TabsContent value="buffet" className="space-y-4 md:space-y-6 lg:space-y-8">
-              {buffetLoading ? (
-                <MenuItemSkeleton count={4} />
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-full max-w-4xl mx-auto"
-                >
-                  {/* Premium Buffet Container */}
-                  <div className="relative rounded-3xl overflow-hidden border-3 border-accent gold-glow">
-                    {/* Elegant Background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-accent/15 via-background to-accent/10 pointer-events-none"></div>
-
-                    <div className="relative p-6 md:p-14 lg:p-16">
-                      {/* Luxe Header Section */}
-                      <motion.div
-                        initial={{ opacity: 0, y: -30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7 }}
-                        className="text-center mb-8 md:mb-14 pb-6 md:pb-10 border-b-2 md:border-b-3 border-gradient-to-r from-accent/30 via-accent/50 to-accent/30"
-                      >
-                        {/* Floating Crown */}
-                        <motion.div
-                          animate={{ y: [0, -12, 0] }}
-                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                          className="flex justify-center mb-4 md:mb-6"
-                        >
-                          <span className="text-4xl md:text-6xl lg:text-7xl drop-shadow-lg">👑</span>
-                        </motion.div>
- 
-                        {/* Main Title with Gradient */}
-                        <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-3 md:mb-4 inline-block bg-gradient-to-r from-accent via-yellow-400 to-accent bg-clip-text text-transparent leading-tight">
-                          High Spirits Buffet
-                        </h2>
- 
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.7, delay: 0.2 }}
-                          className="mt-2 md:mt-4 space-y-1 md:space-y-2"
-                        >
-                          <p className="text-xs sm:text-sm md:text-lg text-accent font-semibold tracking-wide uppercase">
-                            ✨ The Ultimate Fine-Dining Experience ✨
-                          </p>
-                          <p className="text-sm sm:text-base md:text-xl text-muted-foreground">
-                            Unlimited Authentic Indian & Punjabi Specialties
-                          </p>
-                        </motion.div>
-                      </motion.div>
-
-                      {/* Buffet Categories - Vertical List */}
-                      <div className="space-y-12">
-                        {buffetCategories.map((buffetCategory, catIndex) => {
-                          const categoryEmojis: { [key: string]: string } = {
-                            'Starters': '🥘',
-                            'Main Course': '🍛',
-                            'Mains': '🍛',
-                            'Breads': '🍞',
-                            'Bread': '🍞',
-                            'Desserts': '🍰',
-                            'Dessert': '🍰',
-                            'Beverages': '🥤',
-                            'Beverage': '🥤',
-                          };
-
-                          const emoji = Object.entries(categoryEmojis).find(([key]) =>
-                            buffetCategory.title.toLowerCase().includes(key.toLowerCase())
-                          )?.[1] || '🍽️';
-
-                          return (
-                            <motion.div
-                              key={buffetCategory.id}
-                              initial={{ opacity: 0, x: -30 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              viewport={{ once: true }}
-                              transition={{ duration: 0.6, delay: catIndex * 0.1 }}
-                              className="group"
-                            >
-                              {/* Category Header */}
-                              <div className="mb-8 relative">
-                                <div className="flex items-center gap-3 md:gap-4 pb-3 md:pb-4">
-                                  {/* Animated Emoji */}
-                                  <motion.span
-                                    animate={{ scale: [1, 1.15, 1], rotate: [0, 5, 0] }}
-                                    transition={{ duration: 2.5, repeat: Infinity, delay: catIndex * 0.3 }}
-                                    className="text-3xl md:text-5xl flex-shrink-0"
-                                  >
-                                    {emoji}
-                                  </motion.span>
-
-                                  {/* Title and Item Count */}
-                                  <div className="flex-1">
-                                    <h3 className="text-xl sm:text-2xl md:text-4xl font-playfair font-bold text-accent group-hover:text-white transition-colors duration-300">
-                                      {buffetCategory.title}
-                                    </h3>
-                                    <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
-                                      {buffetCategory.buffet_items.length} Authentic Specialties
-                                    </p>
-                                  </div>
-
-                                  {/* Item Count Badge */}
-                                  <div className="hidden lg:flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground font-bold text-lg shadow-lg shadow-accent/30">
-                                    {buffetCategory.buffet_items.length}
-                                  </div>
-                                </div>
-
-                                {/* Gradient Divider */}
-                                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent/60 to-transparent rounded-full"></div>
-                              </div>
-
-                              {/* Items List */}
-                              <ul className="space-y-4 pl-2 md:pl-6">
-                                {buffetCategory.buffet_items.map((item: any, itemIndex: number) => (
-                                  <motion.li
-                                    key={item.id}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.4, delay: itemIndex * 0.06 }}
-                                    className="group/item flex items-start gap-3 md:gap-4 p-3 md:p-5 rounded-xl bg-gradient-to-r from-accent/5 to-transparent border-l-4 border-accent/0 group-hover/item:border-accent group-hover/item:bg-accent/8 transition-all duration-300 hover:shadow-md hover:shadow-accent/20"
-                                  >
-                                    {/* Left Accent Bar */}
-                                    <div className="flex-shrink-0 w-0.5 md:w-1 h-full min-h-[50px] md:min-h-[60px] bg-gradient-to-b from-accent to-accent/30 rounded-full transition-all duration-300"></div>
-
-                                    {/* Item Content */}
-                                    <div className="flex-1 min-w-0">
-                                      {/* Item Name & Badges */}
-                                      <div className="flex items-start justify-between gap-3 mb-2">
-                                        <h4 className="text-base md:text-lg font-semibold text-foreground group-hover/item:text-accent transition-colors duration-300 leading-snug">
-                                          {item.name}
-                                        </h4>
-
-                                        {/* Badge Container */}
-                                        <div className="flex items-center gap-2 flex-shrink-0">
-                                          {/* Veg/Non-Veg Indicator */}
-                                          {item.isVeg !== null && (
-                                            <motion.div
-                                              whileHover={{ scale: 1.2 }}
-                                              className={`flex items-center justify-center w-6 h-6 rounded-lg border-2 transition-all duration-300 ${
-                                                item.isVeg
-                                                  ? 'border-green-500 bg-green-500/20 shadow-md shadow-green-500/30'
-                                                  : 'border-red-500 bg-red-500/20 shadow-md shadow-red-500/30'
-                                              }`}
-                                            >
-                                              <span
-                                                className={`w-2.5 h-2.5 rounded-full ${
-                                                  item.isVeg ? 'bg-green-500' : 'bg-red-500'
-                                                }`}
-                                              ></span>
-                                            </motion.div>
-                                          )}
-
-                                          {/* Spicy Badge */}
-                                          {item.isSpicy && (
-                                            <motion.span
-                                              whileHover={{ scale: 1.25 }}
-                                              className="text-base md:text-lg font-bold cursor-default"
-                                            >
-                                              🌶️
-                                            </motion.span>
-                                          )}
-                                        </div>
-                                      </div>
-
-                                      {/* Description */}
-                                      {item.description && (
-                                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed group-hover/item:text-foreground transition-colors duration-300">
-                                          {item.description}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </motion.li>
-                                ))}
-                              </ul>
-                            </motion.div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Premium Pricing Section */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.7, delay: 0.2 }}
-                        className="mt-16 pt-12 border-t-3 border-gradient-to-r from-accent/30 via-accent/50 to-accent/30"
-                      >
-                        <div className="text-center">
-                          {/* Price Tag */}
-                          <motion.div
-                            initial={{ scale: 0.8 }}
-                            whileInView={{ scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.7, delay: 0.3 }}
-                          >
-                            <p className="text-base md:text-lg text-muted-foreground mb-4 font-medium">
-                              Complete Dining Experience for Just
-                            </p>
-
-                            <div className="mb-8">
-                              {/* Price Glow Effect */}
-                              <div className="relative inline-block">
-                                <div className="absolute -inset-4 bg-accent/30 blur-3xl rounded-3xl"></div>
-
-                                <div className="relative px-6 py-6 md:px-10 md:py-8 rounded-2xl md:rounded-3xl border-2 md:border-3 border-accent bg-gradient-to-b from-accent/15 to-accent/5">
-                                  <p className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-playfair font-bold text-accent leading-none">
-                                    ${buffetCategories[0]?.price}
-                                  </p>
-                                  <p className="text-base md:text-xl text-foreground font-semibold mt-2 md:mt-3">
-                                    Per Person
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </motion.div>
-
-                          {/* Features & Info */}
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            className="mb-8"
-                          >
-                            <p className="text-base md:text-lg text-accent font-semibold mb-6">
-                              ✨ Benefits Include ✨
-                            </p>
-
-                           
-                          </motion.div>
-
-                          {/* CTA Button */}
-                          <motion.div
-                            whileHover={{ scale: 1.08 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex justify-center"
-                          >
-                            <Button 
-                              onClick={() => addToCart({ 
-                                id: 9999, // Unique ID for Buffet
-                                title: "High Spirits Buffet", 
-                                price: buffetCategories[0]?.price || 0, 
-                                quantity: 1 
-                              })}
-                              className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 sm:px-12 py-6 sm:py-8 rounded-xl sm:rounded-2xl font-bold text-base sm:text-xl gold-glow flex items-center gap-3 sm:gap-4 transition-all duration-300"
-                            >
-                              <ShoppingBag className="w-5 h-5 sm:w-6 h-6" />
-                              Add Buffet to Cart
-                            </Button>
-                          </motion.div>
-
-                          {/* Tagline */}
-                          <motion.p
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.7, delay: 0.5 }}
-                            className="text-base md:text-lg text-accent italic font-semibold"
-                          >
-                            "Where Every Meal is a Celebration"
-                          </motion.p>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </TabsContent>
+            {/* Buffet removed - no dedicated buffet tab */}
           </Tabs>
 
           <motion.div
