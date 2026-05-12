@@ -36,7 +36,7 @@ const Navbar = () => {
       initial={{ y: 0 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed top-10 sm:top-12 left-0 right-0 z-50 bg-primary backdrop-blur-md shadow-lg shadow-accent/20 transition-all duration-500"
+      className="fixed top-0 left-0 right-0 z-50 bg-primary backdrop-blur-md shadow-lg shadow-accent/20 transition-all duration-500"
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">

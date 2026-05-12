@@ -67,7 +67,7 @@ const BlogDetail = () => {
     return (
       <main className="bg-primary min-h-screen">
         <Navbar />
-        <div className="pt-32 pb-20 px-4">
+        <div className="pt-20 pb-20 px-4">
           <div className="container mx-auto max-w-3xl">
             <div className="flex justify-center items-center py-20">
               <div className="text-center">
@@ -90,7 +90,7 @@ const BlogDetail = () => {
     return (
       <main className="bg-primary min-h-screen">
         <Navbar />
-        <div className="pt-32 pb-20 px-4">
+        <div className="pt-20 pb-20 px-4">
           <div className="container mx-auto max-w-3xl">
             <div className="flex justify-center items-center py-20">
               <div className="text-center">
@@ -120,7 +120,7 @@ const BlogDetail = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative h-80 md:h-[500px] overflow-hidden mt-32 rounded-2xl mx-4 md:mx-auto md:max-w-6xl"
+        className="relative h-80 md:h-[500px] overflow-hidden mt-20 rounded-2xl mx-4 md:mx-auto md:max-w-6xl"
       >
         <img
           src={blog.image}

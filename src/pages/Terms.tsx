@@ -7,7 +7,7 @@ const Terms = () => {
     <div className="min-h-screen">
       <Navbar />
       
-      <section className="pt-32 pb-24 bg-gradient-to-b from-background to-secondary/20">
+      <section className="pt-20 pb-24 bg-gradient-to-b from-background to-secondary/20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

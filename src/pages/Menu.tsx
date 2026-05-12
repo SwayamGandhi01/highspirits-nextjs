@@ -222,7 +222,7 @@ const Menu = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden mt-32 luxury-gradient">
+      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden mt-20 luxury-gradient">
         <div className="relative z-10 text-center px-4">
           <motion.p
             initial={{ opacity: 0, y: 20 }}

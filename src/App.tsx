@@ -23,14 +23,11 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-import MothersDayTopBar from "./components/MothersDayTopBar";
-
 const AppContent = () => {
   const { isOpen, closePopup } = useWalkInPopup();
 
   return (
     <BrowserRouter>
-      <MothersDayTopBar />
       <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
