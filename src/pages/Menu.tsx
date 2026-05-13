@@ -13,6 +13,7 @@ import MenuCard from '@/components/MenuUI/MenuCard';
 import CartDrawer from '@/components/MenuUI/CartDrawer';
 import SearchBar from '@/components/MenuUI/SearchBar';
 import RecommendationCarousel from '@/components/MenuUI/RecommendationCarousel';
+import MenuSidebar from '@/components/MenuUI/MenuSidebar';
 
 
 interface StrapiImage {
@@ -91,8 +92,7 @@ const Menu = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [vegOnly, setVegOnly] = useState<boolean>(false);
-  const [nonVegOnly, setNonVegOnly] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { addToCart } = useCart();
   const { openPopup } = useWalkInPopup();
 
@@ -117,38 +117,18 @@ const Menu = () => {
 
   const filteredCategories = useMemo(() => {
     const kw = searchQuery.trim().toLowerCase();
-    const isVegName = (name: string) => {
-      const n = name.toLowerCase();
-      return /\b(veg|vegetarian|vegetable|paneer|dal|gobi|aloo|rice|naan|dosa|lassi|kulfi|gulab|samosa)\b/.test(n);
-    };
-
-    const isNonVegName = (name: string) => {
-      const n = name.toLowerCase();
-      return /\b(chicken|beef|lamb|mutton|goat|prawn|prawns|fish|seafood|egg|tikka|tandoori|meat|shrimp|roast|kebab)\b/.test(n);
-    };
-
     return menuCategories
       .map((category: any) => {
         const items = category.menu_items || category.attributes?.menu_items?.data || [];
         const filtered = items.filter((it: any) => {
           const title = (it.title || it.attributes?.title || '').toString().toLowerCase();
           const desc = (it.shortDescription || it.attributes?.shortDescription || '').toString().toLowerCase();
-          const matchesQuery = !kw || title.includes(kw) || desc.includes(kw);
-          // If only veg selected -> require veg match
-          if (vegOnly && !nonVegOnly) {
-            return matchesQuery && (isVegName(title) || isVegName(desc));
-          }
-          // If only non-veg selected -> require non-veg match
-          if (nonVegOnly && !vegOnly) {
-            return matchesQuery && (isNonVegName(title) || isNonVegName(desc));
-          }
-          // If both or none selected -> allow all (but still apply search query)
-          return matchesQuery;
+          return !kw || title.includes(kw) || desc.includes(kw);
         });
         return { ...category, menu_items: filtered };
       })
       .filter((c: any) => (c.menu_items || []).length > 0);
-  }, [menuCategories, searchQuery, vegOnly]);
+  }, [menuCategories, searchQuery]);
 
   // Fetch menu items directly and group by category
   useEffect(() => {
@@ -318,10 +298,26 @@ const Menu = () => {
       {/* Menu Section */}
       <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-background to-secondary/20">
         <div className="container mx-auto px-4 md:px-6">
-          <SearchBar query={searchQuery} onQuery={setSearchQuery} vegOnly={vegOnly} setVegOnly={setVegOnly} />
+          <SearchBar query={searchQuery} onQuery={setSearchQuery} />
           <RecommendationCarousel items={(menuCategories[0]?.menu_items || menuCategories.flatMap((c:any)=>c.menu_items||[])).slice(0, 12)} />
 
-          <CategoryTabs categories={menuCategories} active={activeTab} onChange={(s) => setActiveTab(s)} />
+          <div className="flex items-center justify-between gap-3">
+            <CategoryTabs categories={menuCategories} active={activeTab} onChange={(s) => setActiveTab(s)} />
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="ml-2 px-3 py-2 rounded-full bg-card/70 border border-border text-muted-foreground hidden sm:inline-flex items-center gap-2"
+            >
+              Menu
+            </button>
+            {/* Floating menu for mobile */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="fixed right-4 bottom-24 z-50 bg-accent text-accent-foreground rounded-full p-3 shadow-lg sm:hidden"
+              aria-label="Open menu categories"
+            >
+              Menu
+            </button>
+          </div>
 
           <div className="space-y-4 md:space-y-6 lg:space-y-8 mt-4">
             {isLoading ? (
@@ -368,6 +364,7 @@ const Menu = () => {
       </section>
 
       <CartDrawer />
+      <MenuSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} categories={menuCategories} />
       <Footer />
     </div>
   );
