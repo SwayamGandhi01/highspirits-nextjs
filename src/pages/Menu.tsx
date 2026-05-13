@@ -1,15 +1,18 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MenuItemSkeleton } from '@/components/skeletons/MenuItemSkeleton';
-import ShareButtons from '@/components/ShareButtons';
 import { useCart } from '@/context/CartContext';
 import { useWalkInPopup } from '@/context/WalkInPopupContext';
-import { ShoppingBag, Plus } from 'lucide-react';
+ 
 import LOCAL_MENU, { USE_LOCAL_MENU } from '@/lib/menuData';
+import CategoryTabs from '@/components/MenuUI/CategoryTabs';
+import MenuCard from '@/components/MenuUI/MenuCard';
+import CartDrawer from '@/components/MenuUI/CartDrawer';
+import SearchBar from '@/components/MenuUI/SearchBar';
+import RecommendationCarousel from '@/components/MenuUI/RecommendationCarousel';
 
 
 interface StrapiImage {
@@ -87,6 +90,9 @@ const Menu = () => {
   const [buffetLoading, setBuffetLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [vegOnly, setVegOnly] = useState<boolean>(false);
+  const [nonVegOnly, setNonVegOnly] = useState<boolean>(false);
   const { addToCart } = useCart();
   const { openPopup } = useWalkInPopup();
 
@@ -108,6 +114,41 @@ const Menu = () => {
       setActiveTab(slug);
     }
   }, [menuCategories, activeTab]);
+
+  const filteredCategories = useMemo(() => {
+    const kw = searchQuery.trim().toLowerCase();
+    const isVegName = (name: string) => {
+      const n = name.toLowerCase();
+      return /\b(veg|vegetarian|vegetable|paneer|dal|gobi|aloo|rice|naan|dosa|lassi|kulfi|gulab|samosa)\b/.test(n);
+    };
+
+    const isNonVegName = (name: string) => {
+      const n = name.toLowerCase();
+      return /\b(chicken|beef|lamb|mutton|goat|prawn|prawns|fish|seafood|egg|tikka|tandoori|meat|shrimp|roast|kebab)\b/.test(n);
+    };
+
+    return menuCategories
+      .map((category: any) => {
+        const items = category.menu_items || category.attributes?.menu_items?.data || [];
+        const filtered = items.filter((it: any) => {
+          const title = (it.title || it.attributes?.title || '').toString().toLowerCase();
+          const desc = (it.shortDescription || it.attributes?.shortDescription || '').toString().toLowerCase();
+          const matchesQuery = !kw || title.includes(kw) || desc.includes(kw);
+          // If only veg selected -> require veg match
+          if (vegOnly && !nonVegOnly) {
+            return matchesQuery && (isVegName(title) || isVegName(desc));
+          }
+          // If only non-veg selected -> require non-veg match
+          if (nonVegOnly && !vegOnly) {
+            return matchesQuery && (isNonVegName(title) || isNonVegName(desc));
+          }
+          // If both or none selected -> allow all (but still apply search query)
+          return matchesQuery;
+        });
+        return { ...category, menu_items: filtered };
+      })
+      .filter((c: any) => (c.menu_items || []).length > 0);
+  }, [menuCategories, searchQuery, vegOnly]);
 
   // Fetch menu items directly and group by category
   useEffect(() => {
@@ -275,110 +316,35 @@ const Menu = () => {
       </section>
 
       {/* Menu Section */}
-      <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-background to-secondary/20">
+      <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-background to-secondary/20">
         <div className="container mx-auto px-4 md:px-6">
-          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v)} className="w-full">
-            <TabsList className="flex flex-wrap justify-center gap-2 mb-8 md:mb-12 bg-secondary/50 p-2 rounded-lg h-auto w-full max-w-5xl mx-auto">
-              {/* Buffet removed - categories from menu JSON shown below */}
-              {menuCategories.map((category: any) => {
+          <SearchBar query={searchQuery} onQuery={setSearchQuery} vegOnly={vegOnly} setVegOnly={setVegOnly} />
+          <RecommendationCarousel items={(menuCategories[0]?.menu_items || menuCategories.flatMap((c:any)=>c.menu_items||[])).slice(0, 12)} />
+
+          <CategoryTabs categories={menuCategories} active={activeTab} onChange={(s) => setActiveTab(s)} />
+
+          <div className="space-y-4 md:space-y-6 lg:space-y-8 mt-4">
+            {isLoading ? (
+              <MenuItemSkeleton count={6} />
+            ) : (
+              filteredCategories.map((category: any) => {
                 const slug = category.slug || category.attributes?.slug || `category-${category.id}`;
-                const title = category.title || category.attributes?.title || 'Menu';
+                if (slug !== activeTab) return null;
+                const items = category.menu_items || category.attributes?.menu_items?.data || [];
+
                 return (
-                  <TabsTrigger
-                    key={category.id}
-                    value={slug}
-                    className="text-xs sm:text-sm md:text-base whitespace-nowrap data-[state=active]:bg-accent data-[state=active]:text-accent-foreground px-4 py-2 md:px-6"
-                  >
-                    {title}
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-
-            {/* Menu Categories Tabs */}
-            {menuCategories.map((category: any) => {
-              const slug = category.slug || category.attributes?.slug || `category-${category.id}`;
-              // Handle both new flat structure and old nested structure
-              const menuItems = category.menu_items || category.attributes?.menu_items?.data || [];
-
-              return (
-                <TabsContent key={category.id} value={slug} className="space-y-4 md:space-y-6 lg:space-y-8">
-                  {isLoading ? (
-                    <MenuItemSkeleton count={6} />
-                  ) : menuItems.length > 0 ? (
-                    menuItems.map((item: any, index: number) => {
-                      // Handle both new flat structure and old nested structure
-                      const title = item.title || item.attributes?.title;
-                      const price = item.price || item.attributes?.price;
-                      const shortDescription = item.shortDescription || item.attributes?.shortDescription;
-                      const featured = item.featured !== undefined ? item.featured : item.attributes?.featured;
-                      
-                      return (
-                        <motion.div
-                          key={item.id}
-                          initial={{ opacity: 0, y: 30 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.5, delay: index * 0.1 }}
-                          className={`glass-effect rounded-lg md:rounded-xl overflow-hidden hover:scale-[1.01] md:hover:scale-[1.02] transition-transform duration-300 p-4 md:p-6 lg:p-8 ${
-                            featured ? 'border-2 border-accent gold-glow' : ''
-                          }`}
-                        >
-                          <div className="flex flex-col justify-center">
-                            <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3 md:mb-4 gap-3">
-                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                                <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-playfair font-bold text-foreground leading-tight">
-                                  {title}
-                                </h3>
-                                {featured && (
-                                  <span className="bg-accent text-accent-foreground px-2 py-0.5 rounded-full text-[9px] md:text-xs font-semibold uppercase tracking-wider w-fit">
-                                    Chef's Special
-                                  </span>
-                                )}
-                              </div>
-                                {!['starters', 'mains', 'breads', 'desserts', 'tasting-menus', 'tasting-menu'].includes(slug) && !slug?.toLowerCase().includes('tasting') && (
-                                  <span className="text-xl md:text-2xl font-bold text-accent flex-shrink-0">
-                                    ${price?.toFixed(2)}
-                                  </span>
-                                )}
-                              </div>
-                              <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-3">
-                                {shortDescription}
-                              </p>
-                              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-4 sm:mt-0">
-                                <div className="flex items-center justify-between sm:justify-start gap-4">
-                                  <ShareButtons title={title} />
-                                  <Button 
-                                    onClick={() => addToCart({ id: item.id, title, price, quantity: 1 })}
-                                    className="sm:hidden flex-1 bg-accent hover:bg-accent/90 text-accent-foreground gap-2 h-10 px-4 rounded-full font-semibold"
-                                  >
-                                    <Plus className="w-4 h-4" />
-                                    Add to Cart
-                                  </Button>
-                                </div>
-                                <Button 
-                                  onClick={() => addToCart({ id: item.id, title, price, quantity: 1 })}
-                                  className="hidden sm:flex bg-accent hover:bg-accent/90 text-accent-foreground gap-2 h-10 px-6 rounded-full font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
-                                >
-                                  <Plus className="w-4 h-4" />
-                                  Add to Cart
-                                </Button>
-                              </div>
-                            </div>
-                        </motion.div>
-                      );
-                    })
-                  ) : (
-                    <div className="text-center py-12">
-                      <p className="text-muted-foreground text-lg">No items available in this category</p>
+                  <div key={category.id} className="space-y-4">
+                    <h2 className="text-2xl font-playfair font-semibold text-foreground">{category.title || category.attributes?.title}</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                      {items.map((item: any) => (
+                        <MenuCard key={item.id} item={item} />
+                      ))}
                     </div>
-                  )}
-                </TabsContent>
-              );
-            })}
-
-            {/* Buffet Tab */}
-            {/* Buffet removed - no dedicated buffet tab */}
-          </Tabs>
+                  </div>
+                );
+              })
+            )}
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -401,6 +367,7 @@ const Menu = () => {
         </div>
       </section>
 
+      <CartDrawer />
       <Footer />
     </div>
   );
