@@ -12,6 +12,9 @@ const MenuCard: React.FC<{ item: Item }> = ({ item }) => {
   const price = typeof item.price === 'number' ? item.price : item.attributes?.price || 0;
   const desc = item.shortDescription || item.attributes?.shortDescription || '';
 
+  const nameLower = (title + ' ' + desc).toLowerCase();
+  const isVeg = /\b(veg|vegetarian|paneer|dal|gobi|aloo|naan|dosa|lassi|kulfi|gulab|samosa)\b/.test(nameLower);
+
   const placeholder = `https://source.unsplash.com/collection/190727/400x300?sig=${item.id}`;
 
   return (
@@ -24,7 +27,12 @@ const MenuCard: React.FC<{ item: Item }> = ({ item }) => {
       <div>
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h4 className="text-lg font-playfair font-semibold text-foreground">{title}</h4>
+            <div className="flex items-center gap-3">
+              <h4 className="text-lg font-playfair font-semibold text-foreground">{title}</h4>
+              <span className={`inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded-full ${isVeg ? 'bg-emerald-800 text-emerald-300' : 'bg-red-900 text-red-300'}`}>
+                {isVeg ? 'Veg' : 'Non-Veg'}
+              </span>
+            </div>
             <p className="text-sm text-muted-foreground mt-1">{desc}</p>
           </div>
           <div className="text-right">

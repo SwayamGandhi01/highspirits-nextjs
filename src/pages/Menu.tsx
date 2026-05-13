@@ -12,7 +12,6 @@ import CategoryTabs from '@/components/MenuUI/CategoryTabs';
 import MenuCard from '@/components/MenuUI/MenuCard';
 import CartDrawer from '@/components/MenuUI/CartDrawer';
 import SearchBar from '@/components/MenuUI/SearchBar';
-import RecommendationCarousel from '@/components/MenuUI/RecommendationCarousel';
 import MenuSidebar from '@/components/MenuUI/MenuSidebar';
 
 
@@ -90,10 +89,12 @@ const Menu = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [buffetLoading, setBuffetLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isMobileView, setIsMobileView] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { addToCart } = useCart();
+  const [expandedMenuCategory, setExpandedMenuCategory] = useState<number | null>(null);
   const { openPopup } = useWalkInPopup();
 
   useEffect(() => {
@@ -114,6 +115,18 @@ const Menu = () => {
       setActiveTab(slug);
     }
   }, [menuCategories, activeTab]);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)');
+    const handle = (e: MediaQueryListEvent | MediaQueryList) => setIsMobileView(e.matches);
+    setIsMobileView(mq.matches);
+    if (mq.addEventListener) mq.addEventListener('change', handle);
+    else mq.addListener(handle as any);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', handle as any);
+      else mq.removeListener(handle as any);
+    };
+  }, []);
 
   const filteredCategories = useMemo(() => {
     const kw = searchQuery.trim().toLowerCase();
@@ -299,7 +312,6 @@ const Menu = () => {
       <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-background to-secondary/20">
         <div className="container mx-auto px-4 md:px-6">
           <SearchBar query={searchQuery} onQuery={setSearchQuery} />
-          <RecommendationCarousel items={(menuCategories[0]?.menu_items || menuCategories.flatMap((c:any)=>c.menu_items||[])).slice(0, 12)} />
 
           <div className="flex items-center justify-between gap-3">
             <CategoryTabs categories={menuCategories} active={activeTab} onChange={(s) => setActiveTab(s)} />
@@ -310,22 +322,58 @@ const Menu = () => {
               Menu
             </button>
             {/* Floating menu for mobile */}
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="fixed right-4 bottom-24 z-50 bg-accent text-accent-foreground rounded-full p-3 shadow-lg sm:hidden"
-              aria-label="Open menu categories"
-            >
-              Menu
-            </button>
+            {/* mobile: no sidebar button (we don't want the slidebar on phones) */}
           </div>
+
+          {/* No veg/non-veg filters — show 'All' by default; mobile shows one category */}
 
           <div className="space-y-4 md:space-y-6 lg:space-y-8 mt-4">
             {isLoading ? (
               <MenuItemSkeleton count={6} />
+            ) : activeTab === 'menu' ? (
+              <div className="space-y-3">
+                {menuCategories.map((category: any) => {
+                  const id = category.id;
+                  const title = category.title || category.attributes?.title || 'Category';
+                  const items = category.menu_items || category.attributes?.menu_items?.data || [];
+
+                  return (
+                    <div key={id} className="border border-border rounded-lg">
+                      <div className="flex items-center justify-between p-3 bg-card/40">
+                        <div className="flex items-center gap-2">
+                          <div className="font-semibold text-foreground">{title}</div>
+                          <div className="text-sm text-muted-foreground">{items.length}</div>
+                        </div>
+                        <div>
+                          <button
+                            onClick={() => setExpandedMenuCategory(expandedMenuCategory === id ? null : id)}
+                            className="px-3 py-1 rounded-full bg-secondary/30 text-muted-foreground text-sm"
+                          >
+                            {expandedMenuCategory === id ? '−' : '+'}
+                          </button>
+                        </div>
+                      </div>
+
+                      {expandedMenuCategory === id && (
+                        <div className="p-3 space-y-3 bg-card/20 border-t border-border">
+                          {items.map((it: any) => (
+                            <MenuCard key={it.id} item={it} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             ) : (
               filteredCategories.map((category: any) => {
                 const slug = category.slug || category.attributes?.slug || `category-${category.id}`;
-                if (slug !== activeTab) return null;
+                if (activeTab === 'entrees-special') {
+                  const title = (category.title || category.attributes?.title || '').toString().toLowerCase();
+                  const s = (slug || '').toString().toLowerCase();
+                  const matches = title.includes('entree') || title.includes('special platter') || title.includes('special platters') || s.includes('entree') || s.includes('special-platter') || s.includes('special-platters');
+                  if (!matches) return null;
+                } else if (activeTab !== 'all' && slug !== activeTab) return null;
                 const items = category.menu_items || category.attributes?.menu_items?.data || [];
 
                 return (
@@ -364,7 +412,7 @@ const Menu = () => {
       </section>
 
       <CartDrawer />
-      <MenuSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} categories={menuCategories} />
+      {!isMobileView && <MenuSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} categories={menuCategories} />}
       <Footer />
     </div>
   );

@@ -245,6 +245,32 @@ export const LOCAL_MENU = {
         shortDescription: it.description || '',
         price: typeof it.price === 'number' ? it.price : parseFloat(it.price) || 0,
         featured: false,
+        // heuristic veg / non-veg marker (prefer explicit non-veg matches first)
+        isVeg: ((): boolean => {
+          const name = (it.name || '').toString().toLowerCase();
+          const desc = (it.description || '').toString().toLowerCase();
+          const combined = `${name} ${desc}`;
+
+          // explicit veg indicators (words typically indicating vegetarian)
+          const vegRegex = /\b(veg|vegetarian|vegetable|paneer|potato|aloo|gobi|cauliflower|chana|dal|lentil|muttar|matar|peas|spinach|palak|korma|kofta|sabzi|raita|salad|gulab|kulfi|ras malai|pulao|rice|roti|naan|paratha|dosa|idli|sambar)\b/;
+          // explicit non-veg indicators
+          const nonVegRegex = /\b(chicken|chicken\b|chicken\s|beef|pork|lamb|mutton|goat|prawn|prawns|shrimp|shrimp|fish|seafood|egg|tikka|tandoori|kabab|kebab|kebabs|seekh|meat|biryani|cutlet|tikka|butter chicken|chicken tikka|chicken 65|tandoori|momos)\b/;
+
+          // If item explicitly mentions veg option like '(veg)' or '/veg' mark veg
+          if (/\(\s*veg/i.test(it.name || '') || /\/\s*veg/i.test(it.name || '')) return true;
+          // If explicitly mentions non-veg variants, mark non-veg
+          if (/\(\s*non-?veg|\/\s*non-?veg/i.test(it.name || '')) return false;
+
+          // non-veg detection first (strong signal)
+          if (nonVegRegex.test(combined)) return false;
+          if (vegRegex.test(combined)) return true;
+
+          // fallback: category that is clearly vegetarian
+          if ((cat.category || '').toString().toLowerCase().includes('veget')) return true;
+
+          // fallback conservative default: treat as non-veg if unsure? we'll default to false to avoid veg leakage
+          return false;
+        })(),
       })),
     };
   }),
