@@ -110,15 +110,17 @@ const WalkInPopup: React.FC<WalkInPopupProps> = ({ isOpen, onClose }) => {
 
               {/* Content */}
               <div className="relative p-6 sm:p-8">
-                {/* Close Button */}
-                <motion.button
-                  onClick={onClose}
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="absolute top-6 right-6 p-2 rounded-full hover:bg-accent/10 transition-colors z-10"
-                >
-                  <X className="w-6 h-6 text-muted-foreground hover:text-accent" />
-                </motion.button>
+                {/* Close Button - Sticky for easy access */}
+                <div className="sticky top-0 z-20 flex justify-end pointer-events-none w-full pb-2 -mt-2 sm:-mt-4">
+                  <motion.button
+                    onClick={onClose}
+                    whileHover={{ scale: 1.1, rotate: 90 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="p-2 rounded-full bg-background/50 hover:bg-accent/20 transition-colors pointer-events-auto backdrop-blur-sm -mr-2 sm:-mr-4"
+                  >
+                    <X className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground hover:text-accent" />
+                  </motion.button>
+                </div>
 
                 {/* Header */}
                 <motion.div
