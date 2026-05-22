@@ -31,7 +31,24 @@ const Cart: React.FC = () => {
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <>
+      {/* Mobile bottom bar */}
+      {totalItems > 0 && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 w-[92%] sm:hidden">
+          <div className="bg-card/80 p-3 rounded-full shadow-xl flex items-center justify-between border border-border">
+            <div className="flex items-center gap-3">
+              <div className="bg-accent text-accent-foreground rounded-full p-2"><ShoppingCart className="w-5 h-5"/></div>
+              <div>
+                <div className="text-sm text-muted-foreground">{totalItems} items</div>
+                <div className="font-bold text-foreground">${totalPrice.toFixed(2)}</div>
+              </div>
+            </div>
+            <button onClick={() => setIsOpen(true)} className="bg-accent text-accent-foreground px-4 py-2 rounded-full font-semibold">View Cart</button>
+          </div>
+        </div>
+      )}
+
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetContent className="w-[90%] sm:max-w-md flex flex-col glass-effect border-l border-white/10 p-4 sm:p-6">
         <SheetHeader className="pb-4 md:pb-6">
           <SheetTitle className="text-xl md:text-2xl font-playfair font-bold flex items-center gap-2">
@@ -137,6 +154,7 @@ const Cart: React.FC = () => {
         )}
       </SheetContent>
     </Sheet>
+    </>
   );
 };
 

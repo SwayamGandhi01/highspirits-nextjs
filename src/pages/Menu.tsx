@@ -10,7 +10,7 @@ import { useWalkInPopup } from '@/context/WalkInPopupContext';
 import LOCAL_MENU, { USE_LOCAL_MENU } from '@/lib/menuData';
 import CategoryTabs from '@/components/MenuUI/CategoryTabs';
 import MenuCard from '@/components/MenuUI/MenuCard';
-import CartDrawer from '@/components/MenuUI/CartDrawer';
+import Cart from '@/components/Cart';
 import SearchBar from '@/components/MenuUI/SearchBar';
 import MenuSidebar from '@/components/MenuUI/MenuSidebar';
 
@@ -411,7 +411,7 @@ const Menu = () => {
         </div>
       </section>
 
-      <CartDrawer />
+      <Cart />
       {!isMobileView && <MenuSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} categories={menuCategories} />}
       <Footer />
     </div>
