@@ -10,6 +10,19 @@ const CartDrawer: React.FC = () => {
   const service = +(totalPrice * 0.02).toFixed(2);
   const grand = +(totalPrice + tax + service).toFixed(2);
 
+  const handleWhatsAppOrder = () => {
+    const phoneNumber = '61420408809';
+    let message = `Hello High Spirits! I would like to place an order:%0A%0A`;
+    cart.forEach((item, index) => {
+      message += `${index + 1}. ${item.title} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}%0A`;
+    });
+    message += `%0A*Subtotal: $${totalPrice.toFixed(2)}*`;
+    message += `%0A*Tax (5%): $${tax.toFixed(2)}*`;
+    message += `%0A*Service: $${service.toFixed(2)}*`;
+    message += `%0A*Grand Total: $${grand.toFixed(2)}*%0A%0APlease confirm my order. Thank you!`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
   return (
     <>
       {/* Mobile bottom bar */}
@@ -68,7 +81,7 @@ const CartDrawer: React.FC = () => {
             <div className="flex justify-between font-bold text-lg text-foreground"><span>Total</span><span>${grand.toFixed(2)}</span></div>
             <div className="flex gap-2">
               <button onClick={() => { clearCart(); setIsOpen(false); }} className="flex-1 bg-secondary text-muted-foreground rounded-full py-2">Clear</button>
-              <button className="flex-1 bg-accent text-accent-foreground rounded-full py-2 font-semibold">Checkout</button>
+              <button onClick={handleWhatsAppOrder} className="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-full py-2 font-bold transition-colors">Order via WhatsApp</button>
             </div>
           </div>
         </div>
