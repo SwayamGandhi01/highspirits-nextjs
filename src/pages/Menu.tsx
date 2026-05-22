@@ -8,6 +8,7 @@ import { useCart } from '@/context/CartContext';
 import { useWalkInPopup } from '@/context/WalkInPopupContext';
  
 import LOCAL_MENU, { USE_LOCAL_MENU } from '@/lib/menuData';
+import Head from 'next/head';
 import CategoryTabs from '@/components/MenuUI/CategoryTabs';
 import MenuCard from '@/components/MenuUI/MenuCard';
 import Cart from '@/components/Cart';
@@ -98,13 +99,7 @@ const Menu = () => {
   const { openPopup } = useWalkInPopup();
 
   useEffect(() => {
-    document.title = 'High Spirits Menu | Indian Buffet & Fine Dining Bunbury';
-    
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Explore the High Spirits menu featuring an Indian buffet and fine dining dishes, with vegetarian and non-vegetarian mains crafted for refined tastes.');
-    }
+    // SEO handled by next/head in the render method
   }, []);
 
   // Select first category tab when menuCategories populate
@@ -276,6 +271,10 @@ const Menu = () => {
 
   return (
     <div className="min-h-screen">
+      <Head>
+        <title>High Spirits Menu | Indian Buffet & Fine Dining Bunbury</title>
+        <meta name="description" content="Explore the High Spirits menu featuring an Indian buffet and fine dining dishes, with vegetarian and non-vegetarian mains crafted for refined tastes." />
+      </Head>
       <Navbar />
       
       {/* Hero Section */}

@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import MapBox from '@/components/MapBox';
+import Head from 'next/head';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,13 +28,7 @@ const getPhoneNumber = () => {
 
 const Contact = () => {
   useEffect(() => {
-    document.title = 'Contact Us | Indian Buffet Restaurant in Bunbury';
-
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Contact High Spirits in Bunbury to book a table, enquire about events, or learn more about our Indian buffet dining experience.');
-    }
+    // SEO handled by next/head in the render method
   }, []);
 
   const [formData, setFormData] = useState({
@@ -138,6 +133,10 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen">
+      <Head>
+        <title>Contact Us | Indian Buffet Restaurant in Bunbury</title>
+        <meta name="description" content="Contact High Spirits in Bunbury to book a table, enquire about events, or learn more about our Indian buffet dining experience." />
+      </Head>
       <Navbar />
 
       {/* Hero Section */}

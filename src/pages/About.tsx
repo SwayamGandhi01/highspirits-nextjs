@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
@@ -9,11 +10,7 @@ import { useEffect } from 'react';
 
 const About = () => {
   useEffect(() => {
-    document.title = 'About High Spirits | Indian Buffet & Dining in Bunbury';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Learn about High Spirits, a Bunbury Indian dining destination known for its curated buffet, refined flavours and welcoming hospitality.');
-    }
+    // SEO handled by next/head in the render method
   }, []);
 
   const values = [
@@ -25,6 +22,10 @@ const About = () => {
 
   return (
     <div className="min-h-screen">
+      <Head>
+        <title>About High Spirits | Indian Buffet & Dining in Bunbury</title>
+        <meta name="description" content="Learn about High Spirits, a Bunbury Indian dining destination known for its curated buffet, refined flavours and welcoming hospitality." />
+      </Head>
       <Navbar />
 
       {/* Hero Section */}

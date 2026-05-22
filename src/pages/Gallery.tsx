@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Head from 'next/head';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -14,13 +15,7 @@ const Gallery = () => {
   const imagesPerPage = 12; // 4x3 grid, adjust as needed
 
   useEffect(() => {
-    document.title = 'Events & Indian Buffet Dining in Bunbury | High Spirits';
-    
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'See photos from High Spirits capturing Indian buffet dining, refined spaces and happy customers enjoying thoughtful hospitality.');
-    }
+    // SEO handled by next/head in the render method
   }, []);
 
   useEffect(() => {
@@ -86,6 +81,10 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen">
+      <Head>
+        <title>Events & Indian Buffet Dining in Bunbury | High Spirits</title>
+        <meta name="description" content="See photos from High Spirits capturing Indian buffet dining, refined spaces and happy customers enjoying thoughtful hospitality." />
+      </Head>
       <Navbar />
 
       {/* Hero Section */}

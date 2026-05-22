@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -14,13 +15,7 @@ const Events = () => {
   const { openPopup } = useWalkInPopup();
 
   useEffect(() => {
-    document.title = 'Private Events & Indian Buffet Dining | High Spirits';
-    
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Plan private events at High Spirits in Bunbury, offering Indian buffet dining, elegant ambience and carefully curated dining experiences.');
-    }
+    // SEO handled by next/head in the render method
   }, []);
 
   useEffect(() => {
@@ -57,6 +52,10 @@ const Events = () => {
 
   return (
     <div className="min-h-screen">
+      <Head>
+        <title>Private Events & Indian Buffet Dining | High Spirits</title>
+        <meta name="description" content="Plan private events at High Spirits in Bunbury, offering Indian buffet dining, elegant ambience and carefully curated dining experiences." />
+      </Head>
       <Navbar />
       
       {/* Hero Section */}
