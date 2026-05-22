@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import WalkInPopup from '../components/WalkInPopup';
 
 interface WalkInPopupContextType {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export const WalkInPopupProvider: React.FC<{ children: React.ReactNode }> = ({ c
   return (
     <WalkInPopupContext.Provider value={{ isOpen, openPopup, closePopup }}>
       {children}
+      <WalkInPopup isOpen={isOpen} onClose={closePopup} />
     </WalkInPopupContext.Provider>
   );
 };

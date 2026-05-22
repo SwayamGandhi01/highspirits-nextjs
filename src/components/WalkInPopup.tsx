@@ -39,7 +39,7 @@ const WalkInPopup: React.FC<WalkInPopupProps> = ({ isOpen, onClose }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://admin.highspirits.au/api/walk-ins', {
+      const response = await fetch('https://calm-actor-864a39d720.strapiapp.com/api/walk-ins', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

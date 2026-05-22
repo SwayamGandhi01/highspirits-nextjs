@@ -27,7 +27,7 @@ const Blogs = () => {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://admin.highspirits.au/api/blogs?populate=featuredImage');
+        const response = await fetch('https://calm-actor-864a39d720.strapiapp.com/api/blogs?populate=featuredImage');
         if (!response.ok) {
           throw new Error('Failed to fetch blogs');
         }
