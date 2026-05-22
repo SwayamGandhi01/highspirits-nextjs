@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 160 70% 12%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 160 70% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 160 70% 12%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 160 50% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 160 30% 15%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 42 78% 51%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 42 78% 51%;
+    --input: 160 30% 20%;
+    --ring: 42 78% 51%;
+
+    --radius: 0.5rem;
+    
+    --luxury-green: 160 70% 12%;
+    --luxury-green-dark: 160 80% 8%;
+    --royal-gold: 42 78% 51%;
+    --gold-glow: 42 78% 51%;
+    
+    --gradient-luxury: linear-gradient(135deg, hsl(160 70% 12%), hsl(160 60% 18%));
+    --gradient-gold: linear-gradient(135deg, hsl(42 78% 51%), hsl(42 90% 60%));
+    
+    --shadow-gold: 0 0 25px hsla(42, 78%, 51%, 0.5);
+    --shadow-elegant: 0 20px 60px hsla(0, 0%, 0%, 0.8);
+    
+    --transition-luxury: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.6s ease-in-out;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  /* Amsterdam Four font removed - using Playfair Display fallback */
+
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 160 70% 12%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 160 70% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 160 70% 12%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 160 50% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 160 30% 15%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 42 78% 51%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 42 78% 51%;
+    --input: 160 30% 20%;
+    --ring: 42 78% 51%;
+    
+    --sidebar-background: 160 70% 8%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 42 78% 51%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 160 50% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 42 78% 51%;
+    --sidebar-ring: 42 78% 51%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer utilities {
+  .luxury-gradient {
+    background: linear-gradient(135deg, hsl(var(--luxury-green)), hsl(var(--luxury-green-dark)));
+  }
+  
+  .gold-gradient {
+    background: linear-gradient(135deg, hsl(var(--royal-gold)), hsl(42 90% 60%));
+  }
+  
+  .gold-glow {
+    box-shadow: 0 0 25px hsla(42, 78%, 51%, 0.5);
+  }
+  
+  .elegant-shadow {
+    box-shadow: 0 20px 60px hsla(0, 0%, 0%, 0.8);
+  }
+  
+  .glass-effect {
+    background: rgba(10, 61, 46, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(203, 161, 53, 0.2);
+  }
+  
+  .text-luxury {
+    background: linear-gradient(135deg, hsl(var(--royal-gold)), hsl(42 90% 70%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .shimmer-text {
+    background: linear-gradient(90deg, 
+      hsl(var(--royal-gold)) 0%, 
+      hsl(42 90% 70%) 50%, 
+      hsl(var(--royal-gold)) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .bg-gradient-radial {
+    background-image: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

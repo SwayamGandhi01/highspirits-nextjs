@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import dalMakhani from '@/assets/dish-dal-makhani.jpg';
-import palakPaneer from '@/assets/dish-palak-paneer.jpg';
-import roganJosh from '@/assets/dish-rogan-josh.jpg';
-import naan from '@/assets/dish-naan.jpg';
+const dalMakhani = '/images/dish-dal-makhani.jpg';
+const palakPaneer = '/images/dish-palak-paneer.jpg';
+const roganJosh = '/images/dish-rogan-josh.jpg';
+const naan = '/images/dish-naan.jpg';
 
 const IngredientsShowcase = () => {
   const fallback = [
@@ -122,7 +122,7 @@ const IngredientsShowcase = () => {
               {/* Image with macro effect */}
               <div className="relative h-96 overflow-hidden">
                 <motion.img
-                  src={ingredient.image}
+                  src={(ingredient.image as any)?.src || String(ingredient.image)}
                   alt={ingredient.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   whileHover={{ filter: 'brightness(1.1)' }}

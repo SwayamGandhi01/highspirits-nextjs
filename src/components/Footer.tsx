@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 // Helper function to get phone number based on Australia time
@@ -62,10 +62,10 @@ const Footer = () => {
 
                 return (
                   <li key={link}>
-                    <Link
-                      to={path}
-                      className="text-muted-foreground hover:text-accent transition-colors duration-300"
-                    >
+                        <Link
+                          href={path}
+                          className="text-muted-foreground hover:text-accent transition-colors duration-300"
+                        >
                       {link}
                     </Link>
                   </li>
@@ -129,10 +129,10 @@ const Footer = () => {
               © {new Date().getFullYear()} High Spirits. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
-              <Link to="/privacy" className="text-muted-foreground hover:text-accent transition-colors">
+              <Link href="/privacy" className="text-muted-foreground hover:text-accent transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-muted-foreground hover:text-accent transition-colors">
+              <Link href="/terms" className="text-muted-foreground hover:text-accent transition-colors">
                 Terms of Service
               </Link>
             </div>

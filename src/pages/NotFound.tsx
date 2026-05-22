@@ -1,15 +1,16 @@
-import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { motion } from "framer-motion";
 import { Home, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
-  const location = useLocation();
+  const router = useRouter();
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
+    console.error("404 Error: User attempted to access non-existent route:", router.asPath);
+  }, [router.asPath]);
 
   return (
     <div className="flex min-h-screen items-center justify-center luxury-gradient">
@@ -27,7 +28,7 @@ const NotFound = () => {
             The page you're looking for doesn't exist or has been moved.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/">
+            <Link href="/">
               <Button
                 size="lg"
                 className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold gold-glow"
@@ -36,7 +37,7 @@ const NotFound = () => {
                 Return Home
               </Button>
             </Link>
-            <Link to="/menu">
+            <Link href="/menu">
               <Button
                 size="lg"
                 variant="outline"

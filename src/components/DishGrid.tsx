@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
-import dalMakhani from '@/assets/dish-dal-makhani.jpg';
-import palakPaneer from '@/assets/dish-palak-paneer.jpg';
-import roganJosh from '@/assets/dish-rogan-josh.jpg';
-import naan from '@/assets/dish-naan.jpg';
-import heroDish1 from '@/assets/hero-dish-1.jpg';
-import heroDish2 from '@/assets/hero-dish-2.jpg';
+import Image from 'next/image';
+const dalMakhani = '/images/dish-dal-makhani.jpg';
+const palakPaneer = '/images/dish-palak-paneer.jpg';
+const roganJosh = '/images/dish-rogan-josh.jpg';
+const naan = '/images/dish-naan.jpg';
+const heroDish1 = '/images/hero-dish-1.jpg';
+const heroDish2 = '/images/hero-dish-2.jpg';
 
 type RemoteDish = {
   id: number;
@@ -39,7 +40,7 @@ const DishGrid = () => {
             return {
               id: it.id,
               image: url,
-              name: it.title || it.documentId || 'Dish',
+              name: it.title || (it as any).documentId || 'Dish',
               category: it.shortDescription || undefined,
             };
           })
@@ -98,9 +99,12 @@ const DishGrid = () => {
               className="group relative overflow-hidden rounded-lg elegant-shadow cursor-pointer"
             >
               <div className="aspect-square overflow-hidden">
-                <img
+                <Image
                   src={typeof dish.image === 'string' ? dish.image : (dish.image as any)?.default || dish.image}
                   alt={dish.name}
+                  width={600}
+                  height={600}
+                  sizes="(max-width: 640px) 100vw, 33vw"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               </div>

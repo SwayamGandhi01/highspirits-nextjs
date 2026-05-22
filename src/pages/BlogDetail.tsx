@@ -2,11 +2,13 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 import { Calendar, User, ArrowLeft, ChefHat } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const BlogDetail = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const router = useRouter();
+  const { slug } = router.query as { slug?: string };
   const [blog, setBlog] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -96,7 +98,7 @@ const BlogDetail = () => {
               <div className="text-center">
                 <p className="text-red-500 mb-4">Error: {error || 'Blog not found'}</p>
                 <Link
-                  to="/blogs"
+                  href="/blogs"
                   className="inline-flex items-center space-x-2 px-6 py-2 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-all"
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -137,7 +139,7 @@ const BlogDetail = () => {
           className="absolute top-6 left-6 md:left-8 z-10"
         >
           <Link
-            to="/blogs"
+            href="/blogs"
             className="inline-flex items-center space-x-2 px-4 py-2 bg-black/40 backdrop-blur-md text-white rounded-lg hover:bg-black/60 transition-all duration-300 border border-white/20"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -236,7 +238,7 @@ const BlogDetail = () => {
                 Discover more culinary insights, chef stories, and dining experiences
               </p>
               <Link
-                to="/blogs"
+                href="/blogs"
                 className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-accent to-accent/80 text-accent-foreground font-semibold rounded-xl hover:shadow-xl hover:shadow-accent/40 transition-all duration-300 transform hover:scale-105 border border-accent/50"
               >
                 <ChefHat className="w-5 h-5" />

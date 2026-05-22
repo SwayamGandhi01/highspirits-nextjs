@@ -36,7 +36,7 @@ const MenuSidebar: React.FC<Props> = ({ open, onClose, categories }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: open ? 1 : 0 }}
         className={`fixed inset-0 bg-black/50 z-50 ${open ? 'block' : 'pointer-events-none'}`}
-        ref={(el) => (overlayRef.current = el)}
+        ref={(el) => { overlayRef.current = el; }}
         onClick={(e) => {
           if (e.target === overlayRef.current) onClose();
         }}

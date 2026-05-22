@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { X, Clock, MapPin, Sparkle, Star, ChefHat, Flame } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -10,7 +10,7 @@ interface LunchWelcomePopupProps {
 }
 
 const HighSpiritsPopup: React.FC<LunchWelcomePopupProps> = ({ isOpen, onClose }) => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const colors = {
     emerald: '#146854',
     emeraldDark: '#0d4a3d',
@@ -21,7 +21,7 @@ const HighSpiritsPopup: React.FC<LunchWelcomePopupProps> = ({ isOpen, onClose })
 
   const handleExploreMenu = () => {
     onClose();
-    navigate('/menu');
+    navigate.push('/menu');
   };
 
   const paragraphText = `We are delighted to welcome you for lunch dine-in at High Spirits. Enjoy our thoughtfully created menu in a relaxed, refined setting.`;

@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 import { Calendar, User, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const Blogs = () => {
@@ -121,7 +121,7 @@ const Blogs = () => {
               {blogPosts.map((post, index) => (
                 <Link
                   key={post.id}
-                  to={`/blogs/${post.slug}`}
+                  href={`/blogs/${post.slug}`}
                   className="no-underline"
                 >
                   <motion.article
@@ -206,7 +206,7 @@ const Blogs = () => {
               Couldn't find what you're looking for? Reach out to us and we'll be happy to help.
             </p>
             <Link
-              to="/contact"
+              href="/contact"
               className="inline-flex items-center justify-center px-8 py-3 bg-accent text-accent-foreground font-semibold rounded-lg hover:bg-accent/90 transition-all duration-300 hover:shadow-lg hover:shadow-accent/30"
             >
               Contact Us

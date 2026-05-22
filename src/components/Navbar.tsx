@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
@@ -41,9 +42,11 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2">
             <motion.div whileHover={{ scale: 1.05 }} className="flex items-center space-x-2">
-              <img src="/logo1.png" alt="High Spirits logo" className="h-8 md:h-12 w-auto" />
+              <div className="relative h-8 md:h-12 w-12 md:w-12">
+                <Image src="/logo1.png" alt="High Spirits logo" fill className="object-contain" />
+              </div>
               <span className="hidden lg:inline-block text-2xl font-playfair font-bold text-luxury tracking-wider">HIGH SPIRITS</span>
             </motion.div>
           </Link>
@@ -58,7 +61,7 @@ const Navbar = () => {
                 transition={{ delay: index * 0.1 }}
               >
                 <Link
-                  to={link.path}
+                  href={link.path}
                   className="text-foreground hover:text-accent transition-colors duration-300 font-inter font-medium tracking-wide relative group"
                 >
                   {link.name}
@@ -121,7 +124,7 @@ const Navbar = () => {
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
-                  to={link.path}
+                  href={link.path}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block text-foreground hover:text-accent transition-colors duration-300 py-2 text-lg font-inter"
                 >

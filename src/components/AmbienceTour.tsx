@@ -1,11 +1,12 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Image from 'next/image';
 import VideoBackground from "./VideoBackground";
 
 /* IMAGES FOR GALLERY */
-import restaurantAmbience from "@/assets/Image.jpg";
-import img2 from "@/assets/Image2.jpg";
-import img3 from "@/assets/Image3.jpg";
+const restaurantAmbience = '/images/Image.jpg';
+const img2 = '/images/Image2.jpg';
+const img3 = '/images/Image3.jpg';
 
 const AmbienceTour = () => {
   const containerRef = useRef(null);
@@ -97,9 +98,12 @@ const AmbienceTour = () => {
               }}
               className="w-full h-[350px] md:h-[420px] rounded-3xl overflow-hidden shadow-md"
             >
-              <img
-                src={galleryImages[0]}
+              <Image
+                src={String(galleryImages[0])}
                 alt="Gallery Left"
+                width={700}
+                height={420}
+                sizes="(max-width: 640px) 100vw, 33vw"
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -112,9 +116,13 @@ const AmbienceTour = () => {
               }}
               className="w-full h-[420px] md:h-[500px] rounded-3xl overflow-hidden shadow-lg"
             >
-              <img
-                src={galleryImages[1]}
+              <Image
+                src={String(galleryImages[1])}
                 alt="Gallery Center"
+                width={1200}
+                height={600}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
+                priority
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -127,9 +135,12 @@ const AmbienceTour = () => {
               }}
               className="w-full h-[350px] md:h-[420px] rounded-3xl overflow-hidden shadow-md"
             >
-              <img
-                src={galleryImages[2]}
+              <Image
+                src={String(galleryImages[2])}
                 alt="Gallery Right"
+                width={700}
+                height={420}
+                sizes="(max-width: 640px) 100vw, 33vw"
                 className="w-full h-full object-cover"
               />
             </motion.div>

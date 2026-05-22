@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Button } from './ui/button';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Star } from 'lucide-react';
 import VideoBackground from './VideoBackground';
 import { Marquee } from './ui/marquee';
 import { cn } from '@/lib/utils';
 import { useWalkInPopup } from '@/context/WalkInPopupContext';
-import heroDish1 from '@/assets/hero-dish-1.jpg';
-import heroDish2 from '@/assets/hero-dish-2.jpg';
-import heroDish3 from '@/assets/hero-dish-3.jpg';
+const heroDish1 = '/images/hero-dish-1.jpg';
+const heroDish2 = '/images/hero-dish-2.jpg';
+const heroDish3 = '/images/hero-dish-3.jpg';
 
 const taglines = [
   "Buffet Starts at 5:00 P.M",
@@ -55,13 +56,9 @@ const Hero = () => {
         transition={{ duration: 1.2, delay: 0.5 }}
         className="absolute left-10 top-1/4 w-64 h-64 hidden lg:block"
       >
-        <motion.img
-          src={heroDish1}
-          alt="Luxury Indian Dish"
-          className="w-full h-full object-cover rounded-full shadow-2xl gold-glow"
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
+          <Image src={heroDish1} alt="Luxury Indian Dish" width={256} height={256} className="w-full h-full object-cover rounded-full shadow-2xl gold-glow" />
+        </motion.div>
       </motion.div>
 
       <motion.div
@@ -70,13 +67,9 @@ const Hero = () => {
         transition={{ duration: 1.2, delay: 0.7 }}
         className="absolute right-10 bottom-1/4 w-56 h-56 hidden lg:block"
       >
-        <motion.img
-          src={heroDish2}
-          alt="Premium Punjabi Cuisine"
-          className="w-full h-full object-cover rounded-full shadow-2xl gold-glow"
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        <motion.div animate={{ y: [0, 20, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}>
+          <Image src={heroDish2} alt="Premium Punjabi Cuisine" width={224} height={224} className="w-full h-full object-cover rounded-full shadow-2xl gold-glow" />
+        </motion.div>
       </motion.div>
 
       <motion.div
@@ -85,13 +78,9 @@ const Hero = () => {
         transition={{ duration: 1, delay: 0.9 }}
         className="absolute right-1/4 top-20 w-48 h-48 hidden xl:block"
       >
-        <motion.img
-          src={heroDish3}
-          alt="North Indian Delicacy"
-          className="w-full h-full object-cover rounded-full shadow-2xl gold-glow"
-          animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        <motion.div animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}>
+          <Image src={heroDish3} alt="North Indian Delicacy" width={192} height={192} className="w-full h-full object-cover rounded-full shadow-2xl gold-glow" />
+        </motion.div>
       </motion.div>
 
       {/* Content */}
@@ -161,7 +150,7 @@ const Hero = () => {
           >
             Walk-In
           </Button>
-          <Link to="/menu">
+          <Link href="/menu">
             <Button
               size="lg"
               variant="outline"

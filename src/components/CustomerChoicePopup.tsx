@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { X, Utensils, ShoppingBag, ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 
 const CustomerChoicePopup: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const hasSeenPopup = sessionStorage.getItem('hasSeenChoicePopup');
@@ -21,7 +21,7 @@ const CustomerChoicePopup: React.FC = () => {
   const handleChoice = (path: string) => {
     sessionStorage.setItem('hasSeenChoicePopup', 'true');
     setIsOpen(false);
-    navigate(path);
+    router.push(path);
   };
 
   const handleClose = () => {

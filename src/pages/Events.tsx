@@ -1,11 +1,12 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar, Users, Sparkles, Music, Utensils, PartyPopper } from 'lucide-react';
 import { useWalkInPopup } from '@/context/WalkInPopupContext';
-import restaurantAmbience from '@/assets/restaurant-ambience.jpg';
+const restaurantAmbience = '/images/restaurant-ambience.jpg';
 
 const Events = () => {
   const [eventTypes, setEventTypes] = useState<Array<any>>([]);
@@ -61,11 +62,7 @@ const Events = () => {
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden mt-20">
         <div className="absolute inset-0">
-          <img
-            src={restaurantAmbience}
-            alt="Events at High Spirit"
-            className="w-full h-full object-cover"
-          />
+          <Image src={restaurantAmbience} alt="Events at High Spirit" fill className="object-cover" />
           <div className="absolute inset-0 bg-primary/80" />
         </div>
         <div className="relative z-10 text-center px-4">

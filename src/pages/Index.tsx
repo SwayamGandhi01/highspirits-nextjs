@@ -10,18 +10,19 @@ import ChefPhilosophy from '@/components/ChefPhilosophy';
 import MenuStory from '@/components/MenuStory';
 import Carousel3D from '@/components/Carousel3D';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { useRef, useEffect, useState } from 'react';
 import { ChefHat, CalendarDays, ShieldCheck, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import chefPortrait from '@/assets/Ishpreet Bedi.jpg';
-import restaurantAmbience from '@/assets/Image.jpg';
-import heroDish1 from '@/assets/hero-dish-1.jpg';
-import heroDish2 from '@/assets/hero-dish-2.jpg';
-import heroDish3 from '@/assets/hero-dish-3.jpg';
-import dalMakhani from '@/assets/dish-dal-makhani.jpg';
-import palakPaneer from '@/assets/dish-palak-paneer.jpg';
-import roganJosh from '@/assets/dish-rogan-josh.jpg';
+import Link from 'next/link';
+const chefPortrait = '/images/ishpreet-bedi.jpg';
+const restaurantAmbience = '/images/Image.jpg';
+const heroDish1 = '/images/hero-dish-1.jpg';
+const heroDish2 = '/images/hero-dish-2.jpg';
+const heroDish3 = '/images/hero-dish-3.jpg';
+const dalMakhani = '/images/dish-dal-makhani.jpg';
+const palakPaneer = '/images/dish-palak-paneer.jpg';
+const roganJosh = '/images/dish-rogan-josh.jpg';
 
 const Index = () => {
   useEffect(() => {
@@ -228,9 +229,11 @@ const Index = () => {
               className="relative"
             >
               <div className="relative rounded-3xl overflow-hidden elegant-shadow">
-                <img
+                <Image
                   src={chefPortrait}
                   alt="Executive Chef Ishpreet Bedi"
+                  width={480}
+                  height={640}
                   className="w-full h-auto object-contain"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
@@ -259,7 +262,7 @@ const Index = () => {
                 Her presence, eye for detail, and genuine devotion to the art of making people's lives happier play an important part in creating the image of High Spirits as a classy restaurant and bar where one can enjoy the real taste of Indian fine dining in Bunbury, WA. Moreover, it helps the restaurant gain the fine dining standard in Australia through care, consistency, and warm-hearted hospitality.
               </p>
               <div className="flex justify-center md:justify-start">
-                <Link to="/about">
+                <Link href="/about">
                   <Button
                     size="lg"
                     className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold gold-glow"
@@ -276,11 +279,7 @@ const Index = () => {
       {/* Ambience Section */}
       <section ref={ambienceRef} className="py-10 relative overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src={restaurantAmbience}
-            alt="Restaurant Ambience"
-            className="w-full h-full object-cover"
-          />
+            <Image src={restaurantAmbience} alt="Restaurant Ambience" fill className="object-cover" />
           <div className="absolute inset-0 bg-primary/90" />
         </div>
 
@@ -301,7 +300,7 @@ const Index = () => {
               Step into a world of elegance where every detail is designed to enchant. From our handcrafted interiors to our attentive service, we create moments that last a lifetime.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/gallery">
+              <Link href="/gallery">
                 <Button
                   size="lg"
                   className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold gold-glow"
@@ -309,7 +308,7 @@ const Index = () => {
                   View Gallery
                 </Button>
               </Link>
-              <Link to="/events">
+              <Link href="/events">
                 <Button
                   size="lg"
                   variant="outline"
@@ -366,8 +365,8 @@ const Index = () => {
                       <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold">{testimonial.name.split(' ').map((n:any)=>n[0]).slice(0,2).join('')}</div>
                       <div>
                         <p className="font-semibold">{testimonial.name}</p>
-                        {(testimonial.title || testimonial.publishedAt) && (
-                          <p className="text-muted-foreground text-sm">{[testimonial.title, testimonial.publishedAt].filter(Boolean).join(' · ')}</p>
+                        {(((testimonial as any).title) || testimonial.publishedAt) && (
+                          <p className="text-muted-foreground text-sm">{[(testimonial as any).title, testimonial.publishedAt].filter(Boolean).join(' · ')}</p>
                         )}
                       </div>
                     </div>
