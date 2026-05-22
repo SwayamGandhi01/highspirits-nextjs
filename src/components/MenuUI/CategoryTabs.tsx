@@ -9,6 +9,7 @@ const CategoryTabs: React.FC<{
   onChange: (slug: string) => void;
 }> = ({ categories, active, onChange }) => {
   const [isMobile, setIsMobile] = React.useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const mq = window.matchMedia('(max-width: 639px)');
@@ -24,7 +25,7 @@ const CategoryTabs: React.FC<{
   return (
     <div className="sticky top-20 z-50 bg-transparent py-2">
       <div className="overflow-x-auto px-4 no-scrollbar">
-        <div className="flex gap-3 items-center">
+        <div className={`flex gap-3 items-center ${!isMobile ? 'flex-wrap' : ''}`}>
           {/* All button */}
           <button
             onClick={() => onChange('all')}
@@ -35,31 +36,49 @@ const CategoryTabs: React.FC<{
             All
           </button>
 
-          {!isMobile && categories
-            .filter((cat) => {
+          {!isMobile && (() => {
+            const validCats = categories.filter((cat) => {
               const title = (cat.title || cat.attributes?.title || '').toString().toLowerCase().trim();
               const slug = (cat.slug || cat.attributes?.slug || '').toString().toLowerCase().trim();
               return title !== 'all' && slug !== 'all';
-            })
-            .map((cat) => {
-              const slug = cat.slug || cat.attributes?.slug || `category-${cat.id}`;
-              const title = cat.title || cat.attributes?.title || 'Menu';
-              const isActive = slug === active;
+            });
+            const MAX_VISIBLE = 5;
+            const hasMore = validCats.length > MAX_VISIBLE;
+            const displayedCats = isExpanded ? validCats : validCats.slice(0, MAX_VISIBLE);
 
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => onChange(slug)}
-                  className={`whitespace-nowrap px-4 py-2 rounded-full transition-all duration-200 font-semibold text-sm ${
-                    isActive
-                      ? 'bg-accent text-accent-foreground shadow-md scale-105'
-                      : 'bg-secondary/20 text-muted-foreground'
-                  }`}
-                >
-                  <span className="inline-block px-1">{title}</span>
-                </button>
-              );
-            })}
+            return (
+              <>
+                {displayedCats.map((cat) => {
+                  const slug = cat.slug || cat.attributes?.slug || `category-${cat.id}`;
+                  const title = cat.title || cat.attributes?.title || 'Menu';
+                  const isActive = slug === active;
+
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => onChange(slug)}
+                      className={`whitespace-nowrap px-4 py-2 rounded-full transition-all duration-200 font-semibold text-sm ${
+                        isActive
+                          ? 'bg-accent text-accent-foreground shadow-md scale-105'
+                          : 'bg-secondary/20 text-muted-foreground hover:bg-secondary/40'
+                      }`}
+                    >
+                      <span className="inline-block px-1">{title}</span>
+                    </button>
+                  );
+                })}
+                {hasMore && (
+                  <button
+                    key="more-toggle"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className="whitespace-nowrap px-4 py-2 rounded-full transition-all duration-200 font-semibold text-sm bg-accent/20 text-accent hover:bg-accent/30"
+                  >
+                    {isExpanded ? 'Less -' : 'More +'}
+                  </button>
+                )}
+              </>
+            );
+          })()}
           {!isMobile && (
             <button
               key="menu-tab"
